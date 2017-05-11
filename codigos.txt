@@ -1,2 +1,8 @@
+/*========= SUBIR CAMBIOS =========*/
+git add -A
+
+/*========= COMENTARIO DE CAMBIOS =========*/
 git commit -m "comentario"
+
+/*========= SUBIR CAMBIOS A GIT =========*/
 git push origin master
