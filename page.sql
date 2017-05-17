@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
--- https://www.phpmyadmin.net/
+-- version 4.5.1
+-- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-05-2017 a las 21:22:04
--- Versión del servidor: 10.1.21-MariaDB
--- Versión de PHP: 7.0.15
+-- Tiempo de generación: 17-05-2017 a las 05:39:46
+-- Versión del servidor: 10.1.19-MariaDB
+-- Versión de PHP: 5.6.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,6 +19,42 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `page`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `banners`
+--
+
+CREATE TABLE `banners` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `photo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id_category_banner` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `category_banners`
+--
+
+CREATE TABLE `category_banners` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `category_banners`
+--
+
+INSERT INTO `category_banners` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'home', '2017-05-17 06:54:06', NULL);
 
 -- --------------------------------------------------------
 
@@ -145,7 +181,18 @@ CREATE TABLE `cms_logs` (
 --
 
 INSERT INTO `cms_logs` (`id`, `ipaddress`, `useragent`, `url`, `description`, `id_cms_users`, `created_at`, `updated_at`) VALUES
-(1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/login', 'admin@crudbooster.com login with IP Address 127.0.0.1', 1, '2017-05-11 23:41:47', NULL);
+(1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/login', 'admin@crudbooster.com login with IP Address 127.0.0.1', 1, '2017-05-11 23:41:47', NULL),
+(2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/login', 'admin@crudbooster.com login with IP Address 127.0.0.1', 1, '2017-05-17 06:48:00', NULL),
+(3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/login', 'admin@crudbooster.com login with IP Address 127.0.0.1', 1, '2017-05-17 06:51:26', NULL),
+(4, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/category_banners/add-save', 'Add New Data home at category banner', 1, '2017-05-17 06:54:06', NULL),
+(5, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/login', 'admin@crudbooster.com login with IP Address 127.0.0.1', 1, '2017-05-17 07:12:13', NULL),
+(6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/login', 'admin@crudbooster.com login with IP Address 127.0.0.1', 1, '2017-05-17 07:20:27', NULL),
+(7, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/menu_management/add-save', 'Add New Data uno at Menu Management', 1, '2017-05-17 07:37:36', NULL),
+(8, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/menu_management/edit-save/3', 'Update data Banner at Menu Management', 1, '2017-05-17 07:38:58', NULL),
+(9, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/login', 'admin@crudbooster.com login with IP Address 127.0.0.1', 1, '2017-05-17 07:42:39', NULL),
+(10, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/login', 'admin@crudbooster.com login with IP Address 127.0.0.1', 1, '2017-05-17 07:47:15', NULL),
+(11, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/login', 'admin@crudbooster.com login with IP Address 127.0.0.1', 1, '2017-05-17 07:55:15', NULL),
+(12, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/login', 'admin@crudbooster.com login with IP Address 127.0.0.1', 1, '2017-05-17 08:01:19', NULL);
 
 -- --------------------------------------------------------
 
@@ -168,6 +215,15 @@ CREATE TABLE `cms_menus` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `cms_menus`
+--
+
+INSERT INTO `cms_menus` (`id`, `name`, `type`, `path`, `color`, `icon`, `parent_id`, `is_active`, `is_dashboard`, `id_cms_privileges`, `sorting`, `created_at`, `updated_at`) VALUES
+(1, 'category banner', 'Route', 'AdminCategoryBannersControllerGetIndex', NULL, 'fa fa-photo', 3, 1, 0, 1, 1, '2017-05-17 06:51:56', NULL),
+(2, 'banner', 'Route', 'AdminBannersControllerGetIndex', NULL, 'fa fa-photo', 3, 1, 0, 1, 2, '2017-05-17 07:01:52', NULL),
+(3, 'Banner', 'Module', 'banners', 'normal', 'fa fa-photo', 0, 1, 0, 1, 1, '2017-05-17 07:37:36', '2017-05-17 07:38:58');
 
 -- --------------------------------------------------------
 
@@ -203,7 +259,9 @@ INSERT INTO `cms_moduls` (`id`, `name`, `icon`, `path`, `table_name`, `controlle
 (8, 'Email Template', 'fa fa-envelope-o', 'email_templates', 'cms_email_templates', 'EmailTemplatesController', 1, 1, '2017-05-11 23:39:30', NULL),
 (9, 'Statistic Builder', 'fa fa-dashboard', 'statistic_builder', 'cms_statistics', 'StatisticBuilderController', 1, 1, '2017-05-11 23:39:30', NULL),
 (10, 'API Generator', 'fa fa-cloud-download', 'api_generator', '', 'ApiCustomController', 1, 1, '2017-05-11 23:39:30', NULL),
-(11, 'Logs', 'fa fa-flag-o', 'logs', 'cms_logs', 'LogsController', 1, 1, '2017-05-11 23:39:30', NULL);
+(11, 'Logs', 'fa fa-flag-o', 'logs', 'cms_logs', 'LogsController', 1, 1, '2017-05-11 23:39:30', NULL),
+(12, 'category banner', 'fa fa-photo', 'category_banners', 'category_banners', 'AdminCategoryBannersController', 0, 0, '2017-05-17 06:51:55', NULL),
+(13, 'banner', 'fa fa-photo', 'banners', 'banners', 'AdminBannersController', 0, 0, '2017-05-17 07:01:51', NULL);
 
 -- --------------------------------------------------------
 
@@ -277,7 +335,9 @@ INSERT INTO `cms_privileges_roles` (`id`, `is_visible`, `is_create`, `is_read`, 
 (8, 1, 1, 1, 1, 1, 1, 8, '2017-05-11 23:39:30', NULL),
 (9, 1, 1, 1, 1, 1, 1, 9, '2017-05-11 23:39:30', NULL),
 (10, 1, 1, 1, 1, 1, 1, 10, '2017-05-11 23:39:30', NULL),
-(11, 1, 0, 1, 0, 1, 1, 11, '2017-05-11 23:39:30', NULL);
+(11, 1, 0, 1, 0, 1, 1, 11, '2017-05-11 23:39:30', NULL),
+(12, 1, 1, 1, 1, 1, 1, 12, NULL, NULL),
+(13, 1, 1, 1, 1, 1, 1, 13, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -313,7 +373,7 @@ INSERT INTO `cms_settings` (`id`, `name`, `content`, `content_input_type`, `data
 (8, 'smtp_username', '', 'text', NULL, NULL, '2017-05-11 23:39:30', NULL, 'Email Setting', 'SMTP Username'),
 (9, 'smtp_password', '', 'text', NULL, NULL, '2017-05-11 23:39:30', NULL, 'Email Setting', 'SMTP Password'),
 (10, 'appname', 'CRUDBooster', 'text', NULL, NULL, '2017-05-11 23:39:30', NULL, 'Application Setting', 'Application Name'),
-(11, 'default_paper_size', 'Legal', 'text', NULL, 'Paper size, ex : A4, Legal, etc', '2017-05-11 23:39:30', NULL, 'Application Setting', 'Default Paper Print Size'),
+(11, 'default_paper_size', 'Letter', 'text', NULL, 'Paper size, ex : A4, Legal, etc', '2017-05-11 23:39:30', NULL, 'Application Setting', 'Default Paper Print Size'),
 (12, 'logo', '', 'upload_image', NULL, NULL, '2017-05-11 23:39:30', NULL, 'Application Setting', 'Logo'),
 (13, 'favicon', '', 'upload_image', NULL, NULL, '2017-05-11 23:39:30', NULL, 'Application Setting', 'Favicon'),
 (14, 'api_debug_mode', 'true', 'select', 'true,false', NULL, '2017-05-11 23:39:30', NULL, 'Application Setting', 'API Debug Mode'),
@@ -416,11 +476,25 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (19, '2016_11_14_141657_create_cms_menus', 1),
 (20, '2016_11_15_132350_create_cms_email_templates', 1),
 (21, '2016_11_15_190410_create_cms_statistics', 1),
-(22, '2016_11_17_102740_create_cms_statistic_components', 1);
+(22, '2016_11_17_102740_create_cms_statistic_components', 1),
+(23, '2017_05_17_014832_create_category_banners_table', 2),
+(24, '2017_05_17_015641_create_banners_table', 3);
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `banners`
+--
+ALTER TABLE `banners`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `category_banners`
+--
+ALTER TABLE `category_banners`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `cms_apicustom`
@@ -523,6 +597,16 @@ ALTER TABLE `migrations`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `banners`
+--
+ALTER TABLE `banners`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `category_banners`
+--
+ALTER TABLE `category_banners`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT de la tabla `cms_apicustom`
 --
 ALTER TABLE `cms_apicustom`
@@ -551,17 +635,17 @@ ALTER TABLE `cms_email_templates`
 -- AUTO_INCREMENT de la tabla `cms_logs`
 --
 ALTER TABLE `cms_logs`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `cms_menus`
 --
 ALTER TABLE `cms_menus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `cms_moduls`
 --
 ALTER TABLE `cms_moduls`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT de la tabla `cms_notifications`
 --
@@ -576,7 +660,7 @@ ALTER TABLE `cms_privileges`
 -- AUTO_INCREMENT de la tabla `cms_privileges_roles`
 --
 ALTER TABLE `cms_privileges_roles`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT de la tabla `cms_settings`
 --
@@ -601,7 +685,7 @@ ALTER TABLE `cms_users`
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
