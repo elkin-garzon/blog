@@ -1,0 +1,5 @@
+/*================== CREAR MODELO CON MIGRACIÓN ==================*/
+php artisan make:model category -m
+
+/*================== CREAR CONTROLES ==================*/
+php artisan make:controller FrontStatusesController --resource

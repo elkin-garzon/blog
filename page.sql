@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-05-2017 a las 06:12:49
+-- Tiempo de generación: 21-05-2017 a las 05:26:11
 -- Versión del servidor: 10.1.19-MariaDB
 -- Versión de PHP: 5.6.28
 
@@ -29,9 +29,11 @@ SET time_zone = "+00:00";
 CREATE TABLE `banners` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `photo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `category_banner_id` int(11) DEFAULT NULL,
+  `photo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `banner_categoris_id` int(11) DEFAULT NULL,
+  `statuses_id` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -40,29 +42,51 @@ CREATE TABLE `banners` (
 -- Volcado de datos para la tabla `banners`
 --
 
-INSERT INTO `banners` (`id`, `name`, `photo`, `description`, `category_banner_id`, `created_at`, `updated_at`) VALUES
-(1, 'banner principal', 'uploads/2017-05/banner.jpg', 'baner principal de prueba', 1, '2017-05-18 07:51:55', NULL);
+INSERT INTO `banners` (`id`, `name`, `description`, `photo`, `url`, `banner_categoris_id`, `statuses_id`, `created_at`, `updated_at`) VALUES
+(1, 'banner principal', 'banner principal de prueba', 'uploads/2017-05/banner.jpg', 'https://www.google.com.co/', 1, 1, '2017-05-20 21:23:48', NULL),
+(2, 'banner 2', 'baner principal de prueba 2', 'uploads/2017-05/banner-2.jpg', 'http://fontawesome.io/icons/', 1, 2, '2017-05-21 00:45:52', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `category_banners`
+-- Estructura de tabla para la tabla `banner_categoris`
 --
 
-CREATE TABLE `category_banners` (
+CREATE TABLE `banner_categoris` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `statuses_id` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Volcado de datos para la tabla `category_banners`
+-- Volcado de datos para la tabla `banner_categoris`
 --
 
-INSERT INTO `category_banners` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'home', '2017-05-17 06:54:06', NULL),
-(2, 'internas', '2017-05-18 07:17:31', NULL);
+INSERT INTO `banner_categoris` (`id`, `name`, `statuses_id`, `created_at`, `updated_at`) VALUES
+(1, 'home', 1, '2017-05-20 21:05:57', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `category` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `statuses_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `categories`
+--
+
+INSERT INTO `categories` (`id`, `category`, `statuses_id`, `created_at`, `updated_at`) VALUES
+(1, 'corporate', 1, '2017-05-21 02:02:18', NULL);
 
 -- --------------------------------------------------------
 
@@ -165,7 +189,7 @@ CREATE TABLE `cms_email_templates` (
 --
 
 INSERT INTO `cms_email_templates` (`id`, `name`, `slug`, `subject`, `content`, `description`, `from_name`, `from_email`, `cc_email`, `created_at`, `updated_at`) VALUES
-(1, 'Email Template Forgot Password Backend', 'forgot_password_backend', NULL, '<p>Hi,</p><p>Someone requested forgot password, here is your new password : </p><p>[password]</p><p><br></p><p>--</p><p>Regards,</p><p>Admin</p>', '[password]', 'System', 'system@crudbooster.com', NULL, '2017-05-11 23:39:31', NULL);
+(1, 'Email Template Forgot Password Backend', 'forgot_password_backend', NULL, '<p>Hi,</p><p>Someone requested forgot password, here is your new password : </p><p>[password]</p><p><br></p><p>--</p><p>Regards,</p><p>Admin</p>', '[password]', 'System', 'system@crudbooster.com', NULL, '2017-05-19 06:45:54', NULL);
 
 -- --------------------------------------------------------
 
@@ -189,34 +213,78 @@ CREATE TABLE `cms_logs` (
 --
 
 INSERT INTO `cms_logs` (`id`, `ipaddress`, `useragent`, `url`, `description`, `id_cms_users`, `created_at`, `updated_at`) VALUES
-(1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/login', 'admin@crudbooster.com login with IP Address 127.0.0.1', 1, '2017-05-11 23:41:47', NULL),
-(2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/login', 'admin@crudbooster.com login with IP Address 127.0.0.1', 1, '2017-05-17 06:48:00', NULL),
-(3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/login', 'admin@crudbooster.com login with IP Address 127.0.0.1', 1, '2017-05-17 06:51:26', NULL),
-(4, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/category_banners/add-save', 'Add New Data home at category banner', 1, '2017-05-17 06:54:06', NULL),
-(5, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/login', 'admin@crudbooster.com login with IP Address 127.0.0.1', 1, '2017-05-17 07:12:13', NULL),
-(6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/login', 'admin@crudbooster.com login with IP Address 127.0.0.1', 1, '2017-05-17 07:20:27', NULL),
-(7, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/menu_management/add-save', 'Add New Data uno at Menu Management', 1, '2017-05-17 07:37:36', NULL),
-(8, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/menu_management/edit-save/3', 'Update data Banner at Menu Management', 1, '2017-05-17 07:38:58', NULL),
-(9, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/login', 'admin@crudbooster.com login with IP Address 127.0.0.1', 1, '2017-05-17 07:42:39', NULL),
-(10, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/login', 'admin@crudbooster.com login with IP Address 127.0.0.1', 1, '2017-05-17 07:47:15', NULL),
-(11, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/login', 'admin@crudbooster.com login with IP Address 127.0.0.1', 1, '2017-05-17 07:55:15', NULL),
-(12, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 'http://localhost:8000/admin/login', 'admin@crudbooster.com login with IP Address 127.0.0.1', 1, '2017-05-17 08:01:19', NULL),
-(13, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'admin@crudbooster.com login with IP Address 127.0.0.1', 1, '2017-05-18 06:18:27', NULL),
-(14, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'admin@crudbooster.com login with IP Address 127.0.0.1', 1, '2017-05-18 06:52:26', NULL),
-(15, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'admin@crudbooster.com login with IP Address 127.0.0.1', 1, '2017-05-18 06:58:56', NULL),
-(16, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/users/edit-save/1', 'Update data Elkin Garzon at Users', 1, '2017-05-18 06:59:49', NULL),
-(17, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-18 07:11:42', NULL),
-(18, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-18 07:13:50', NULL),
-(19, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/banners/add-save', 'Add New Data 1 at banner', 1, '2017-05-18 07:16:53', NULL),
-(20, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/category_banners/add-save', 'Add New Data internas at category banner', 1, '2017-05-18 07:17:31', NULL),
-(21, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-18 07:22:11', NULL),
-(22, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/banners/add-save', 'Add New Data 2 at banner', 1, '2017-05-18 07:27:34', NULL),
-(23, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-18 07:27:43', NULL),
-(24, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/banners/action-selected', 'Delete data 2,1 at banner', 1, '2017-05-18 07:32:55', NULL),
-(25, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/banners/add-save', 'Add New Data 1 at banner', 1, '2017-05-18 07:39:07', NULL),
-(26, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-18 07:47:18', NULL),
-(27, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/banners/action-selected', 'Delete data 1 at banner', 1, '2017-05-18 07:51:21', NULL),
-(28, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/banners/add-save', 'Add New Data banner principal at banner', 1, '2017-05-18 07:51:55', NULL);
+(1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'admin@crudbooster.com login with IP Address 127.0.0.1', 1, '2017-05-19 06:56:52', NULL),
+(2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/users/edit-save/1', 'Update data Elkin Garzon at Users', 1, '2017-05-19 06:57:48', NULL),
+(3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-19 07:08:16', NULL),
+(4, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-20 20:02:49', NULL),
+(5, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-20 20:16:49', NULL),
+(6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/statuses/add-save', 'Add New Data activo at status', 1, '2017-05-20 20:17:12', NULL),
+(7, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/statuses/add-save', 'Add New Data inactivo at status', 1, '2017-05-20 20:17:44', NULL),
+(8, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/statuses/add-save', 'Add New Data pause at status', 1, '2017-05-20 20:46:45', NULL),
+(9, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-20 21:03:27', NULL),
+(10, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/banner_categoris/add-save', 'Add New Data home at banner category', 1, '2017-05-20 21:05:57', NULL),
+(11, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-20 21:06:03', NULL),
+(12, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-20 21:07:51', NULL),
+(13, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-20 21:09:36', NULL),
+(14, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-20 21:12:32', NULL),
+(15, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-20 21:15:54', NULL),
+(16, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-20 21:17:36', NULL),
+(17, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/banners/add-save', 'Add New Data banner principal at banner', 1, '2017-05-20 21:23:48', NULL),
+(18, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 00:18:28', NULL),
+(19, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 00:25:19', NULL),
+(20, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/banners/add-save', 'Add New Data banner 2 at banner', 1, '2017-05-21 00:45:52', NULL),
+(21, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/add-save', 'Add New Data banners at Menu Management', 1, '2017-05-21 01:45:37', NULL),
+(22, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/edit-save/4', 'Update data banners at Menu Management', 1, '2017-05-21 01:47:20', NULL),
+(23, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/edit-save/4', 'Update data banners at Menu Management', 1, '2017-05-21 01:47:49', NULL),
+(24, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/edit-save/4', 'Update data banners at Menu Management', 1, '2017-05-21 01:48:35', NULL),
+(25, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 02:01:22', NULL),
+(26, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/categories/add-save', 'Add New Data 1 at category', 1, '2017-05-21 02:02:18', NULL),
+(27, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 02:17:34', NULL),
+(28, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 02:22:21', NULL),
+(29, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 02:24:01', NULL),
+(30, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 02:26:08', NULL),
+(31, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 02:29:00', NULL),
+(32, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 02:31:23', NULL),
+(33, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/add-save', 'Add New Data page at Menu Management', 1, '2017-05-21 02:34:57', NULL),
+(34, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:06:40', NULL),
+(35, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:07:41', NULL),
+(36, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/users/add-save', 'Add New Data usuario at Users', 1, '2017-05-21 05:10:12', NULL),
+(37, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'user@user.com login with IP Address 127.0.0.1', 2, '2017-05-21 05:10:46', NULL),
+(38, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/edit-save/7', 'Update data page at Menu Management', 1, '2017-05-21 05:16:01', NULL),
+(39, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/edit-save/4', 'Update data banners at Menu Management', 1, '2017-05-21 05:17:08', NULL),
+(40, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/edit-save/5', 'Update data category at Menu Management', 1, '2017-05-21 05:22:21', NULL),
+(41, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/edit-save/2', 'Update data banner category at Menu Management', 1, '2017-05-21 05:23:01', NULL),
+(42, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:23:09', NULL),
+(43, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/categories', 'Try view the data :name at category', 2, '2017-05-21 05:25:30', NULL),
+(44, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/categories', 'Try view the data :name at category', 2, '2017-05-21 05:25:37', NULL),
+(45, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/banners', 'Try view the data :name at banner', 2, '2017-05-21 05:26:16', NULL),
+(46, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:27:05', NULL),
+(47, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:29:05', NULL),
+(48, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/logout', 'user@user.com logout', 2, '2017-05-21 05:30:43', NULL),
+(49, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:31:42', NULL),
+(50, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:33:02', NULL),
+(51, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'user@user.com login with IP Address 127.0.0.1', 2, '2017-05-21 05:34:06', NULL),
+(52, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:37:53', NULL),
+(53, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/add-save', 'Add New Data banner at Menu Management', 1, '2017-05-21 05:41:48', NULL),
+(54, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/add-save', 'Add New Data page at Menu Management', 1, '2017-05-21 05:43:06', NULL),
+(55, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:43:50', NULL),
+(56, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/edit-save/8', 'Update data banner category at Menu Management', 1, '2017-05-21 05:46:30', NULL),
+(57, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:47:32', NULL),
+(58, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:49:27', NULL),
+(59, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/edit-save/10', 'Update data category at Menu Management', 1, '2017-05-21 05:50:19', NULL),
+(60, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/edit-save/9', 'Update data banner at Menu Management', 1, '2017-05-21 05:50:52', NULL),
+(61, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:55:07', NULL),
+(62, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:58:20', NULL),
+(63, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 06:15:15', NULL),
+(64, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 07:14:51', NULL),
+(65, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'user@user.com login with IP Address 127.0.0.1', 2, '2017-05-21 07:15:12', NULL),
+(66, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 07:24:25', NULL),
+(67, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 07:38:42', NULL),
+(68, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 07:39:33', NULL),
+(69, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/logout', 'user@user.com logout', 2, '2017-05-21 07:39:58', NULL),
+(70, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'user@user.com login with IP Address 127.0.0.1', 2, '2017-05-21 07:40:35', NULL),
+(71, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 07:47:00', NULL),
+(72, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 08:09:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -245,9 +313,19 @@ CREATE TABLE `cms_menus` (
 --
 
 INSERT INTO `cms_menus` (`id`, `name`, `type`, `path`, `color`, `icon`, `parent_id`, `is_active`, `is_dashboard`, `id_cms_privileges`, `sorting`, `created_at`, `updated_at`) VALUES
-(1, 'category banner', 'Route', 'AdminCategoryBannersControllerGetIndex', NULL, 'fa fa-photo', 3, 1, 0, 1, 1, '2017-05-17 06:51:56', NULL),
-(2, 'banner', 'Route', 'AdminBannersControllerGetIndex', NULL, 'fa fa-photo', 3, 1, 0, 1, 2, '2017-05-17 07:01:52', NULL),
-(3, 'Banner', 'Module', 'banners', 'normal', 'fa fa-photo', 0, 1, 0, 1, 1, '2017-05-17 07:37:36', '2017-05-17 07:38:58');
+(1, 'status', 'Route', 'AdminStatusesControllerGetIndex', NULL, 'fa fa-check', 0, 1, 0, 1, 3, '2017-05-20 20:14:52', NULL),
+(2, 'banner category', 'Route', 'AdminBannerCategorisControllerGetIndex', 'normal', 'fa fa-th-list', 4, 1, 0, 1, 1, '2017-05-20 21:03:21', '2017-05-21 05:23:01'),
+(3, 'banner', 'Route', 'AdminBannersControllerGetIndex', NULL, 'fa fa-photo', 4, 1, 0, 1, 2, '2017-05-20 21:13:24', NULL),
+(4, 'banners', 'Module', NULL, 'normal', 'fa fa-folder', 0, 1, 0, 1, 2, '2017-05-21 01:45:37', '2017-05-21 05:17:07'),
+(5, 'category', 'Route', 'AdminCategoriesControllerGetIndex', 'normal', 'fa fa-th-list', 7, 1, 0, 1, 1, '2017-05-21 02:00:00', '2017-05-21 05:22:21'),
+(6, 'pages', 'Route', 'AdminPagesControllerGetIndex', NULL, 'fa fa-file-text-o', 7, 1, 0, 1, 2, '2017-05-21 02:04:33', NULL),
+(7, 'page', 'Module', 'pages', 'normal', 'fa fa-folder', 0, 1, 0, 1, 1, '2017-05-21 02:34:57', '2017-05-21 05:16:01'),
+(8, 'banner category', 'Route', 'AdminBannerCategorisControllerGetIndex', 'normal', 'fa fa-th-list', 12, 1, 0, 2, 1, '2017-05-21 05:08:53', '2017-05-21 05:46:29'),
+(9, 'banner', 'Route', 'AdminBannersControllerGetIndex', 'normal', 'fa fa-picture-o', 12, 1, 0, 2, 2, '2017-05-21 05:24:39', '2017-05-21 05:50:52'),
+(10, 'category', 'Route', 'AdminCategoriesControllerGetIndex', 'normal', 'fa fa-th-list', 13, 1, 0, 2, 1, '2017-05-21 05:24:39', '2017-05-21 05:50:19'),
+(11, 'pages', 'Route', 'AdminPagesControllerGetIndex', 'normal', 'fa fa-file-text-o', 13, 1, 0, 2, 2, '2017-05-21 05:24:39', NULL),
+(12, 'banner', 'Module', 'banners', 'normal', 'fa fa-folder', 0, 1, 0, 2, 2, '2017-05-21 05:41:48', NULL),
+(13, 'page', 'Module', 'pages', 'normal', 'fa fa-folder', 0, 1, 0, 2, 1, '2017-05-21 05:43:06', NULL);
 
 -- --------------------------------------------------------
 
@@ -273,19 +351,22 @@ CREATE TABLE `cms_moduls` (
 --
 
 INSERT INTO `cms_moduls` (`id`, `name`, `icon`, `path`, `table_name`, `controller`, `is_protected`, `is_active`, `created_at`, `updated_at`) VALUES
-(1, 'Notifications', 'fa fa-cog', 'notifications', 'cms_notifications', 'NotificationsController', 1, 1, '2017-05-11 23:39:30', NULL),
-(2, 'Privileges', 'fa fa-cog', 'privileges', 'cms_privileges', 'PrivilegesController', 1, 1, '2017-05-11 23:39:30', NULL),
-(3, 'Privileges Roles', 'fa fa-cog', 'privileges_roles', 'cms_privileges_roles', 'PrivilegesRolesController', 1, 1, '2017-05-11 23:39:30', NULL),
-(4, 'Users', 'fa fa-users', 'users', 'cms_users', 'AdminCmsUsersController', 0, 1, '2017-05-11 23:39:30', NULL),
-(5, 'Settings', 'fa fa-cog', 'settings', 'cms_settings', 'SettingsController', 1, 1, '2017-05-11 23:39:30', NULL),
-(6, 'Module Generator', 'fa fa-database', 'module_generator', 'cms_moduls', 'ModulsController', 1, 1, '2017-05-11 23:39:30', NULL),
-(7, 'Menu Management', 'fa fa-bars', 'menu_management', 'cms_menus', 'MenusController', 1, 1, '2017-05-11 23:39:30', NULL),
-(8, 'Email Template', 'fa fa-envelope-o', 'email_templates', 'cms_email_templates', 'EmailTemplatesController', 1, 1, '2017-05-11 23:39:30', NULL),
-(9, 'Statistic Builder', 'fa fa-dashboard', 'statistic_builder', 'cms_statistics', 'StatisticBuilderController', 1, 1, '2017-05-11 23:39:30', NULL),
-(10, 'API Generator', 'fa fa-cloud-download', 'api_generator', '', 'ApiCustomController', 1, 1, '2017-05-11 23:39:30', NULL),
-(11, 'Logs', 'fa fa-flag-o', 'logs', 'cms_logs', 'LogsController', 1, 1, '2017-05-11 23:39:30', NULL),
-(12, 'category banner', 'fa fa-photo', 'category_banners', 'category_banners', 'AdminCategoryBannersController', 0, 0, '2017-05-17 06:51:55', NULL),
-(13, 'banner', 'fa fa-photo', 'banners', 'banners', 'AdminBannersController', 0, 0, '2017-05-17 07:01:51', NULL);
+(1, 'Notifications', 'fa fa-cog', 'notifications', 'cms_notifications', 'NotificationsController', 1, 1, '2017-05-19 06:45:52', NULL),
+(2, 'Privileges', 'fa fa-cog', 'privileges', 'cms_privileges', 'PrivilegesController', 1, 1, '2017-05-19 06:45:52', NULL),
+(3, 'Privileges Roles', 'fa fa-cog', 'privileges_roles', 'cms_privileges_roles', 'PrivilegesRolesController', 1, 1, '2017-05-19 06:45:52', NULL),
+(4, 'Users', 'fa fa-users', 'users', 'cms_users', 'AdminCmsUsersController', 0, 1, '2017-05-19 06:45:52', NULL),
+(5, 'Settings', 'fa fa-cog', 'settings', 'cms_settings', 'SettingsController', 1, 1, '2017-05-19 06:45:52', NULL),
+(6, 'Module Generator', 'fa fa-database', 'module_generator', 'cms_moduls', 'ModulsController', 1, 1, '2017-05-19 06:45:52', NULL),
+(7, 'Menu Management', 'fa fa-bars', 'menu_management', 'cms_menus', 'MenusController', 1, 1, '2017-05-19 06:45:52', NULL),
+(8, 'Email Template', 'fa fa-envelope-o', 'email_templates', 'cms_email_templates', 'EmailTemplatesController', 1, 1, '2017-05-19 06:45:52', NULL),
+(9, 'Statistic Builder', 'fa fa-dashboard', 'statistic_builder', 'cms_statistics', 'StatisticBuilderController', 1, 1, '2017-05-19 06:45:52', NULL),
+(10, 'API Generator', 'fa fa-cloud-download', 'api_generator', '', 'ApiCustomController', 1, 1, '2017-05-19 06:45:52', NULL),
+(11, 'Logs', 'fa fa-flag-o', 'logs', 'cms_logs', 'LogsController', 1, 1, '2017-05-19 06:45:52', NULL),
+(12, 'status', 'fa fa-check', 'statuses', 'statuses', 'AdminStatusesController', 0, 0, '2017-05-20 20:14:52', NULL),
+(13, 'banner category', 'fa fa-camera', 'banner_categoris', 'banner_categoris', 'AdminBannerCategorisController', 0, 0, '2017-05-20 21:03:21', NULL),
+(14, 'banner', 'fa fa-th-list', 'banners', 'banners', 'AdminBannersController', 0, 0, '2017-05-20 21:13:23', NULL),
+(15, 'category', 'fa fa-folder', 'categories', 'categories', 'AdminCategoriesController', 0, 0, '2017-05-21 01:59:59', NULL),
+(16, 'pages', 'fa fa-file-text-o', 'pages', 'pages', 'AdminPagesController', 0, 0, '2017-05-21 02:04:33', NULL);
 
 -- --------------------------------------------------------
 
@@ -323,7 +404,8 @@ CREATE TABLE `cms_privileges` (
 --
 
 INSERT INTO `cms_privileges` (`id`, `name`, `is_superadmin`, `theme_color`, `created_at`, `updated_at`) VALUES
-(1, 'Super Administrator', 1, 'skin-red', '2017-05-11 23:39:30', NULL);
+(1, 'Super Administrator', 1, 'skin-red', '2017-05-19 06:45:52', NULL),
+(2, 'user', 0, 'skin-blue', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -349,19 +431,26 @@ CREATE TABLE `cms_privileges_roles` (
 --
 
 INSERT INTO `cms_privileges_roles` (`id`, `is_visible`, `is_create`, `is_read`, `is_edit`, `is_delete`, `id_cms_privileges`, `id_cms_moduls`, `created_at`, `updated_at`) VALUES
-(1, 1, 0, 0, 0, 0, 1, 1, '2017-05-11 23:39:30', NULL),
-(2, 1, 1, 1, 1, 1, 1, 2, '2017-05-11 23:39:30', NULL),
-(3, 0, 1, 1, 1, 1, 1, 3, '2017-05-11 23:39:30', NULL),
-(4, 1, 1, 1, 1, 1, 1, 4, '2017-05-11 23:39:30', NULL),
-(5, 1, 1, 1, 1, 1, 1, 5, '2017-05-11 23:39:30', NULL),
-(6, 1, 1, 1, 1, 1, 1, 6, '2017-05-11 23:39:30', NULL),
-(7, 1, 1, 1, 1, 1, 1, 7, '2017-05-11 23:39:30', NULL),
-(8, 1, 1, 1, 1, 1, 1, 8, '2017-05-11 23:39:30', NULL),
-(9, 1, 1, 1, 1, 1, 1, 9, '2017-05-11 23:39:30', NULL),
-(10, 1, 1, 1, 1, 1, 1, 10, '2017-05-11 23:39:30', NULL),
-(11, 1, 0, 1, 0, 1, 1, 11, '2017-05-11 23:39:30', NULL),
+(1, 1, 0, 0, 0, 0, 1, 1, '2017-05-19 06:45:52', NULL),
+(2, 1, 1, 1, 1, 1, 1, 2, '2017-05-19 06:45:52', NULL),
+(3, 0, 1, 1, 1, 1, 1, 3, '2017-05-19 06:45:52', NULL),
+(4, 1, 1, 1, 1, 1, 1, 4, '2017-05-19 06:45:53', NULL),
+(5, 1, 1, 1, 1, 1, 1, 5, '2017-05-19 06:45:53', NULL),
+(6, 1, 1, 1, 1, 1, 1, 6, '2017-05-19 06:45:53', NULL),
+(7, 1, 1, 1, 1, 1, 1, 7, '2017-05-19 06:45:53', NULL),
+(8, 1, 1, 1, 1, 1, 1, 8, '2017-05-19 06:45:53', NULL),
+(9, 1, 1, 1, 1, 1, 1, 9, '2017-05-19 06:45:53', NULL),
+(10, 1, 1, 1, 1, 1, 1, 10, '2017-05-19 06:45:53', NULL),
+(11, 1, 0, 1, 0, 1, 1, 11, '2017-05-19 06:45:53', NULL),
 (12, 1, 1, 1, 1, 1, 1, 12, NULL, NULL),
-(13, 1, 1, 1, 1, 1, 1, 13, NULL, NULL);
+(13, 1, 1, 1, 1, 1, 1, 13, NULL, NULL),
+(14, 1, 1, 1, 1, 1, 1, 14, NULL, NULL),
+(15, 1, 1, 1, 1, 1, 1, 15, NULL, NULL),
+(16, 1, 1, 1, 1, 1, 1, 16, NULL, NULL),
+(17, 1, 0, 1, 0, 0, 2, 13, NULL, NULL),
+(18, 1, 1, 1, 1, 1, 2, 14, NULL, NULL),
+(19, 1, 0, 1, 0, 0, 2, 15, NULL, NULL),
+(20, 1, 1, 1, 1, 0, 2, 16, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -387,22 +476,22 @@ CREATE TABLE `cms_settings` (
 --
 
 INSERT INTO `cms_settings` (`id`, `name`, `content`, `content_input_type`, `dataenum`, `helper`, `created_at`, `updated_at`, `group_setting`, `label`) VALUES
-(1, 'login_background_color', NULL, 'text', NULL, 'Input hexacode', '2017-05-11 23:39:30', NULL, 'Login Register Style', 'Login Background Color'),
-(2, 'login_font_color', NULL, 'text', NULL, 'Input hexacode', '2017-05-11 23:39:30', NULL, 'Login Register Style', 'Login Font Color'),
-(3, 'login_background_image', NULL, 'upload_image', NULL, NULL, '2017-05-11 23:39:30', NULL, 'Login Register Style', 'Login Background Image'),
-(4, 'email_sender', 'support@crudbooster.com', 'text', NULL, NULL, '2017-05-11 23:39:30', NULL, 'Email Setting', 'Email Sender'),
-(5, 'smtp_driver', 'mail', 'select', 'smtp,mail,sendmail', NULL, '2017-05-11 23:39:30', NULL, 'Email Setting', 'Mail Driver'),
-(6, 'smtp_host', '', 'text', NULL, NULL, '2017-05-11 23:39:30', NULL, 'Email Setting', 'SMTP Host'),
-(7, 'smtp_port', '25', 'text', NULL, 'default 25', '2017-05-11 23:39:30', NULL, 'Email Setting', 'SMTP Port'),
-(8, 'smtp_username', '', 'text', NULL, NULL, '2017-05-11 23:39:30', NULL, 'Email Setting', 'SMTP Username'),
-(9, 'smtp_password', '', 'text', NULL, NULL, '2017-05-11 23:39:30', NULL, 'Email Setting', 'SMTP Password'),
-(10, 'appname', 'CRUDBooster', 'text', NULL, NULL, '2017-05-11 23:39:30', NULL, 'Application Setting', 'Application Name'),
-(11, 'default_paper_size', 'Letter', 'text', NULL, 'Paper size, ex : A4, Legal, etc', '2017-05-11 23:39:30', NULL, 'Application Setting', 'Default Paper Print Size'),
-(12, 'logo', '', 'upload_image', NULL, NULL, '2017-05-11 23:39:30', NULL, 'Application Setting', 'Logo'),
-(13, 'favicon', '', 'upload_image', NULL, NULL, '2017-05-11 23:39:30', NULL, 'Application Setting', 'Favicon'),
-(14, 'api_debug_mode', 'true', 'select', 'true,false', NULL, '2017-05-11 23:39:30', NULL, 'Application Setting', 'API Debug Mode'),
-(15, 'google_api_key', '', 'text', NULL, NULL, '2017-05-11 23:39:30', NULL, 'Application Setting', 'Google API Key'),
-(16, 'google_fcm_key', '', 'text', NULL, NULL, '2017-05-11 23:39:30', NULL, 'Application Setting', 'Google FCM Key');
+(1, 'login_background_color', NULL, 'text', NULL, 'Input hexacode', '2017-05-19 06:45:53', NULL, 'Login Register Style', 'Login Background Color'),
+(2, 'login_font_color', NULL, 'text', NULL, 'Input hexacode', '2017-05-19 06:45:53', NULL, 'Login Register Style', 'Login Font Color'),
+(3, 'login_background_image', NULL, 'upload_image', NULL, NULL, '2017-05-19 06:45:53', NULL, 'Login Register Style', 'Login Background Image'),
+(4, 'email_sender', 'elkingarzonyaya@gmail.com', 'text', NULL, NULL, '2017-05-19 06:45:53', NULL, 'Email Setting', 'Email Sender'),
+(5, 'smtp_driver', 'smtp', 'select', 'smtp,mail,sendmail', NULL, '2017-05-19 06:45:53', NULL, 'Email Setting', 'Mail Driver'),
+(6, 'smtp_host', 'smtp.gmail.com', 'text', NULL, NULL, '2017-05-19 06:45:53', NULL, 'Email Setting', 'SMTP Host'),
+(7, 'smtp_port', '587', 'text', NULL, 'default 25', '2017-05-19 06:45:53', NULL, 'Email Setting', 'SMTP Port'),
+(8, 'smtp_username', 'dosapruebasgrande@gmail,com', 'text', NULL, NULL, '2017-05-19 06:45:53', NULL, 'Email Setting', 'SMTP Username'),
+(9, 'smtp_password', 'Elkin2831', 'text', NULL, NULL, '2017-05-19 06:45:53', NULL, 'Email Setting', 'SMTP Password'),
+(10, 'appname', 'CRUDBooster', 'text', NULL, NULL, '2017-05-19 06:45:53', NULL, 'Application Setting', 'Application Name'),
+(11, 'default_paper_size', 'Legal', 'text', NULL, 'Paper size, ex : A4, Legal, etc', '2017-05-19 06:45:53', NULL, 'Application Setting', 'Default Paper Print Size'),
+(12, 'logo', '', 'upload_image', NULL, NULL, '2017-05-19 06:45:53', NULL, 'Application Setting', 'Logo'),
+(13, 'favicon', '', 'upload_image', NULL, NULL, '2017-05-19 06:45:53', NULL, 'Application Setting', 'Favicon'),
+(14, 'api_debug_mode', 'true', 'select', 'true,false', NULL, '2017-05-19 06:45:53', NULL, 'Application Setting', 'API Debug Mode'),
+(15, 'google_api_key', '', 'text', NULL, NULL, '2017-05-19 06:45:53', NULL, 'Application Setting', 'Google API Key'),
+(16, 'google_fcm_key', '', 'text', NULL, NULL, '2017-05-19 06:45:53', NULL, 'Application Setting', 'Google FCM Key');
 
 -- --------------------------------------------------------
 
@@ -460,7 +549,8 @@ CREATE TABLE `cms_users` (
 --
 
 INSERT INTO `cms_users` (`id`, `name`, `photo`, `email`, `password`, `id_cms_privileges`, `created_at`, `updated_at`, `status`) VALUES
-(1, 'Elkin Garzon', 'uploads/2017-05/usuario.png', 'elkingarzonyaya@gmail.com', '$2y$10$H7XHa.gBXgJLTB7Fjq1iM.999E6RIelyjg8Jd0e1DzkFN51AHCvji', 1, '2017-05-11 23:39:30', '2017-05-18 06:59:48', 'Active');
+(1, 'Elkin Garzon', 'uploads/2017-05/usuario.png', 'elkingarzonyaya@gmail.com', '$2y$10$n7Qqkin2VkuuxQUoZ/3hHez5RpLUPFm00.XDv3a37eTT660k3bpCu', 1, '2017-05-19 06:45:52', '2017-05-19 06:57:48', 'Active'),
+(2, 'usuario', 'uploads/2017-05/user.png', 'user@user.com', '$2y$10$7st3S5nsZO4xaLS8P15gS.M5PMKFo30g/9ChlcqXrbXoXRTcdzmlq', 2, '2017-05-21 05:10:12', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -501,8 +591,50 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (20, '2016_11_15_132350_create_cms_email_templates', 1),
 (21, '2016_11_15_190410_create_cms_statistics', 1),
 (22, '2016_11_17_102740_create_cms_statistic_components', 1),
-(23, '2017_05_17_014832_create_category_banners_table', 2),
-(25, '2017_05_17_015641_create_banners_table', 3);
+(23, '2017_05_20_151035_create_statuses_table', 2),
+(26, '2017_05_20_155414_create_banner_categoris_table', 3),
+(27, '2017_05_20_155521_create_banners_table', 3),
+(28, '2017_05_20_204932_create_categories_table', 4),
+(30, '2017_05_20_205007_create_pages_table', 5);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pages`
+--
+
+CREATE TABLE `pages` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `content` longtext COLLATE utf8_unicode_ci,
+  `banner` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `categories_id` int(11) DEFAULT NULL,
+  `statuses_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `statuses`
+--
+
+CREATE TABLE `statuses` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `statuses`
+--
+
+INSERT INTO `statuses` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'activo', '2017-05-20 20:17:12', NULL),
+(2, 'inactivo', '2017-05-20 20:17:44', NULL),
+(3, 'pause', '2017-05-20 20:46:45', NULL);
 
 --
 -- Índices para tablas volcadas
@@ -515,9 +647,15 @@ ALTER TABLE `banners`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `category_banners`
+-- Indices de la tabla `banner_categoris`
 --
-ALTER TABLE `category_banners`
+ALTER TABLE `banner_categoris`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `categories`
+--
+ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -617,6 +755,18 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `pages`
+--
+ALTER TABLE `pages`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `statuses`
+--
+ALTER TABLE `statuses`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -626,10 +776,15 @@ ALTER TABLE `migrations`
 ALTER TABLE `banners`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT de la tabla `category_banners`
+-- AUTO_INCREMENT de la tabla `banner_categoris`
 --
-ALTER TABLE `category_banners`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `banner_categoris`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT de la tabla `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `cms_apicustom`
 --
@@ -659,17 +814,17 @@ ALTER TABLE `cms_email_templates`
 -- AUTO_INCREMENT de la tabla `cms_logs`
 --
 ALTER TABLE `cms_logs`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 --
 -- AUTO_INCREMENT de la tabla `cms_menus`
 --
 ALTER TABLE `cms_menus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT de la tabla `cms_moduls`
 --
 ALTER TABLE `cms_moduls`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT de la tabla `cms_notifications`
 --
@@ -679,12 +834,12 @@ ALTER TABLE `cms_notifications`
 -- AUTO_INCREMENT de la tabla `cms_privileges`
 --
 ALTER TABLE `cms_privileges`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `cms_privileges_roles`
 --
 ALTER TABLE `cms_privileges_roles`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT de la tabla `cms_settings`
 --
@@ -704,12 +859,22 @@ ALTER TABLE `cms_statistic_components`
 -- AUTO_INCREMENT de la tabla `cms_users`
 --
 ALTER TABLE `cms_users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+--
+-- AUTO_INCREMENT de la tabla `pages`
+--
+ALTER TABLE `pages`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `statuses`
+--
+ALTER TABLE `statuses`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

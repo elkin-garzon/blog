@@ -6,3 +6,6 @@ git commit -m "comentario"
 
 /*========= SUBIR CAMBIOS A GIT =========*/
 git push origin master
+
+/*========= CREAR VERSION EN GIT =========*/
+$ git tag -a v0.1 -m 'version beta 0.1'
