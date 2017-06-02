@@ -2,4 +2,4 @@
 php artisan make:model category -m
 
 /*================== CREAR CONTROLES ==================*/
-php artisan make:controller FrontStatusesController --resource
+php artisan make:controller StatusController --resource

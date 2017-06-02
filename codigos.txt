@@ -2,10 +2,13 @@
 git add -A
 
 /*========= COMENTARIO DE CAMBIOS =========*/
-git commit -m "comentario"
+git commit -m "corregido problema de subida de imagenen, creacion de modulos ok"
+
+/*========= CREAR VERSION EN GIT =========*/
+git tag -a v0.1 -m 'version beta 0.1'
+
+/*========= SUBIR VERSION A GIT =========*/
+git push origin --tags
 
 /*========= SUBIR CAMBIOS A GIT =========*/
 git push origin master
-
-/*========= CREAR VERSION EN GIT =========*/
-$ git tag -a v0.1 -m 'version beta 0.1'

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-05-2017 a las 05:26:11
+-- Tiempo de generación: 02-06-2017 a las 05:11:24
 -- Versión del servidor: 10.1.19-MariaDB
 -- Versión de PHP: 5.6.28
 
@@ -29,11 +29,10 @@ SET time_zone = "+00:00";
 CREATE TABLE `banners` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `photo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `banner_category` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
   `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `banner_categoris_id` int(11) DEFAULT NULL,
-  `statuses_id` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -42,515 +41,265 @@ CREATE TABLE `banners` (
 -- Volcado de datos para la tabla `banners`
 --
 
-INSERT INTO `banners` (`id`, `name`, `description`, `photo`, `url`, `banner_categoris_id`, `statuses_id`, `created_at`, `updated_at`) VALUES
-(1, 'banner principal', 'banner principal de prueba', 'uploads/2017-05/banner.jpg', 'https://www.google.com.co/', 1, 1, '2017-05-20 21:23:48', NULL),
-(2, 'banner 2', 'baner principal de prueba 2', 'uploads/2017-05/banner-2.jpg', 'http://fontawesome.io/icons/', 1, 2, '2017-05-21 00:45:52', NULL);
+INSERT INTO `banners` (`id`, `name`, `image`, `banner_category`, `status`, `url`, `created_at`, `updated_at`) VALUES
+(1, 'banner de prueba', 'banners/May2017/Ge04ldTmLrpeKXozTDLQ.jpg', 1, 2, '#', '2017-05-30 01:30:29', '2017-05-30 01:30:29'),
+(2, 'banner 2', 'banners/May2017/NyRKOllOGMFesM1vcRok.jpg', 1, 1, '#', '2017-05-30 01:41:07', '2017-05-30 01:41:07');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `banner_categoris`
+-- Estructura de tabla para la tabla `banner_categories`
 --
 
-CREATE TABLE `banner_categoris` (
+CREATE TABLE `banner_categories` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `status` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `banner_categories`
+--
+
+INSERT INTO `banner_categories` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'home', 1, '2017-05-29 18:17:58', '2017-05-29 18:17:58'),
+(2, 'servicios', 1, '2017-05-30 01:27:08', '2017-05-31 02:58:13');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `category_pages`
+--
+
+CREATE TABLE `category_pages` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `statuses_id` int(11) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `banner_categoris`
---
-
-INSERT INTO `banner_categoris` (`id`, `name`, `statuses_id`, `created_at`, `updated_at`) VALUES
-(1, 'home', 1, '2017-05-20 21:05:57', NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `categories`
---
-
-CREATE TABLE `categories` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `category` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `statuses_id` int(11) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `categories`
---
-
-INSERT INTO `categories` (`id`, `category`, `statuses_id`, `created_at`, `updated_at`) VALUES
-(1, 'corporate', 1, '2017-05-21 02:02:18', NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cms_apicustom`
---
-
-CREATE TABLE `cms_apicustom` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `permalink` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tabel` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `aksi` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `kolom` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `orderby` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `sub_query_1` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `sql_where` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `nama` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `keterangan` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `parameter` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `method_type` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `parameters` longtext COLLATE utf8_unicode_ci,
-  `responses` longtext COLLATE utf8_unicode_ci
+  `slug` text COLLATE utf8_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `category_pages`
+--
+
+INSERT INTO `category_pages` (`id`, `name`, `status`, `created_at`, `updated_at`, `slug`) VALUES
+(1, 'home', 1, '2017-05-31 02:04:10', '2017-05-31 02:04:10', 'inicio');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `cms_apikey`
+-- Estructura de tabla para la tabla `data_rows`
 --
 
-CREATE TABLE `cms_apikey` (
+CREATE TABLE `data_rows` (
   `id` int(10) UNSIGNED NOT NULL,
-  `screetkey` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `hit` int(11) DEFAULT NULL,
-  `status` varchar(25) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'active',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `data_type_id` int(10) UNSIGNED NOT NULL,
+  `field` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `display_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `required` tinyint(1) NOT NULL DEFAULT '0',
+  `browse` tinyint(1) NOT NULL DEFAULT '1',
+  `read` tinyint(1) NOT NULL DEFAULT '1',
+  `edit` tinyint(1) NOT NULL DEFAULT '1',
+  `add` tinyint(1) NOT NULL DEFAULT '1',
+  `delete` tinyint(1) NOT NULL DEFAULT '1',
+  `details` text COLLATE utf8_unicode_ci,
+  `order` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `data_rows`
+--
+
+INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, `required`, `browse`, `read`, `edit`, `add`, `delete`, `details`, `order`) VALUES
+(26, 3, 'id', 'number', 'id', 1, 0, 0, 0, 0, 0, '', 1),
+(27, 3, 'name', 'text', 'name', 1, 1, 1, 1, 1, 1, '', 2),
+(28, 3, 'email', 'text', 'email', 1, 1, 1, 1, 1, 1, '', 3),
+(29, 3, 'password', 'password', 'password', 1, 0, 0, 1, 1, 0, '', 4),
+(30, 3, 'remember_token', 'text', 'remember_token', 0, 0, 0, 0, 0, 0, '', 5),
+(31, 3, 'created_at', 'timestamp', 'created_at', 0, 1, 1, 0, 0, 0, '', 6),
+(32, 3, 'updated_at', 'timestamp', 'updated_at', 0, 0, 0, 0, 0, 0, '', 7),
+(33, 3, 'avatar', 'image', 'avatar', 0, 1, 1, 1, 1, 1, '', 8),
+(34, 5, 'id', 'number', 'id', 1, 0, 0, 0, 0, 0, '', 1),
+(35, 5, 'name', 'text', 'name', 1, 1, 1, 1, 1, 1, '', 2),
+(36, 5, 'created_at', 'timestamp', 'created_at', 0, 0, 0, 0, 0, 0, '', 3),
+(37, 5, 'updated_at', 'timestamp', 'updated_at', 0, 0, 0, 0, 0, 0, '', 4),
+(38, 4, 'id', 'number', 'id', 1, 0, 0, 0, 0, 0, '', 1),
+(39, 4, 'parent_id', 'select_dropdown', 'parent_id', 0, 0, 1, 1, 1, 1, '{"default":"","null":"","options":{"":"-- None --"},"relationship":{"key":"id","label":"name"}}', 2),
+(40, 4, 'order', 'text', 'order', 1, 1, 1, 1, 1, 1, '{"default":1}', 3),
+(41, 4, 'name', 'text', 'name', 1, 1, 1, 1, 1, 1, '', 4),
+(42, 4, 'slug', 'text', 'slug', 1, 1, 1, 1, 1, 1, '', 5),
+(43, 4, 'created_at', 'timestamp', 'created_at', 0, 0, 1, 0, 0, 0, '', 6),
+(44, 4, 'updated_at', 'timestamp', 'updated_at', 0, 0, 0, 0, 0, 0, '', 7),
+(45, 6, 'id', 'number', 'id', 1, 0, 0, 0, 0, 0, '', 1),
+(46, 6, 'name', 'text', 'Name', 1, 1, 1, 1, 1, 1, '', 2),
+(47, 6, 'created_at', 'timestamp', 'created_at', 0, 0, 0, 0, 0, 0, '', 3),
+(48, 6, 'updated_at', 'timestamp', 'updated_at', 0, 0, 0, 0, 0, 0, '', 4),
+(49, 6, 'display_name', 'text', 'Display Name', 1, 1, 1, 1, 1, 1, '', 5),
+(52, 3, 'role_id', 'text', 'role_id', 1, 1, 1, 1, 1, 1, '', 9),
+(58, 8, 'id', 'text', 'Id', 1, 0, 0, 0, 0, 0, '', 1),
+(59, 8, 'status', 'text', 'Status', 0, 1, 1, 1, 1, 1, '', 2),
+(60, 8, 'slug', 'text', 'Slug', 0, 1, 1, 1, 1, 1, '', 3),
+(61, 8, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 0, 0, 0, '', 4),
+(62, 8, 'updated_at', 'timestamp', 'Updated At', 0, 1, 1, 0, 0, 0, '', 5),
+(63, 9, 'id', 'text', 'Id', 1, 1, 1, 0, 0, 0, '', 1),
+(64, 9, 'name', 'text', 'Name', 1, 1, 1, 1, 1, 1, '', 3),
+(65, 9, 'status', 'select_dropdown', 'Status', 1, 1, 1, 1, 1, 1, '{"relationship":{"key":"id","label":"status","status_slug":"admin/status"}}', 2),
+(66, 9, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 0, 0, 0, '', 4),
+(67, 9, 'updated_at', 'timestamp', 'Updated At', 0, 1, 1, 0, 0, 0, '', 5),
+(68, 10, 'id', 'text', 'Id', 1, 1, 1, 0, 0, 0, '', 1),
+(69, 10, 'name', 'text', 'Name', 0, 1, 1, 1, 1, 1, '', 2),
+(70, 10, 'image', 'image', 'Image', 0, 1, 1, 1, 1, 1, '', 3),
+(73, 10, 'url', 'text', 'Url', 0, 1, 1, 1, 1, 1, '', 6),
+(74, 10, 'created_at', 'timestamp', 'Created At', 0, 0, 0, 0, 0, 0, '', 7),
+(75, 10, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '', 8),
+(76, 10, 'banner_category', 'select_dropdown', 'Banner Category', 1, 0, 0, 0, 0, 0, '{"relationship":{"key":"id","label":"name"}}', 4),
+(77, 10, 'status', 'select_dropdown', 'Status', 1, 0, 0, 0, 0, 0, '{"relationship":{"key":"id","label":"status","status_slug":"admin/status"}}', 5),
+(78, 11, 'id', 'text', 'Id', 1, 1, 1, 0, 0, 0, '', 1),
+(79, 11, 'name', 'text', 'Name', 0, 1, 1, 1, 1, 1, '', 2),
+(80, 11, 'status', 'select_dropdown', 'Status', 0, 0, 1, 1, 1, 1, '{"relationship":{"key":"id","label":"status","status_slug":"admin/status"}}', 4),
+(81, 11, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 0, 0, 0, '', 5),
+(82, 11, 'updated_at', 'timestamp', 'Updated At', 0, 1, 1, 0, 0, 0, '', 6),
+(83, 11, 'slug', 'text', 'Slug', 0, 1, 1, 1, 1, 1, '', 3),
+(84, 12, 'id', 'text', 'Id', 1, 1, 1, 0, 0, 0, '', 1),
+(85, 12, 'title', 'text', 'Title', 0, 1, 1, 1, 1, 1, '', 2),
+(86, 12, 'body', 'rich_text_box', 'Body', 0, 0, 0, 1, 1, 1, '', 3),
+(87, 12, 'image', 'image', 'Image', 0, 0, 0, 1, 1, 1, '', 4),
+(88, 12, 'slug', 'text', 'Slug', 0, 0, 0, 1, 1, 1, '', 5),
+(89, 12, 'meta_description', 'text', 'Meta Description', 0, 0, 0, 1, 1, 1, '', 6),
+(90, 12, 'meta_keywords', 'text', 'Meta Keywords', 0, 0, 0, 1, 1, 1, '', 7),
+(92, 12, 'status', 'select_dropdown', 'Status', 0, 0, 0, 1, 1, 1, '{"relationship":{"key":"id","label":"status"}}', 9),
+(93, 12, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 0, 0, 0, '', 10),
+(94, 12, 'updated_at', 'timestamp', 'Updated At', 0, 1, 1, 0, 0, 0, '', 11),
+(97, 12, 'category_page', 'select_dropdown', 'Category', 0, 0, 0, 1, 1, 1, '{"relationship":{"key":"id","label":"name"}}', 8),
+(98, 13, 'id', 'number', 'Id', 1, 1, 1, 0, 0, 0, '', 1),
+(99, 13, 'name', 'text', 'Name', 0, 1, 1, 1, 1, 1, '', 2),
+(100, 13, 'slug', 'text', 'Slug', 0, 1, 1, 1, 1, 1, '', 3),
+(101, 13, 'status', 'select_dropdown', 'Status', 0, 0, 0, 1, 1, 1, '{"relationship":{"key":"id","label":"status","status_slug":"admin/status"}}', 4),
+(102, 13, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 0, 0, 0, '', 5),
+(103, 13, 'updated_at', 'timestamp', 'Updated At', 0, 1, 1, 0, 0, 0, '', 6),
+(104, 16, 'id', 'number', 'Id', 1, 1, 1, 0, 0, 0, '', 1),
+(105, 16, 'title', 'text', 'Title', 0, 1, 1, 1, 1, 1, '', 2),
+(106, 16, 'body', 'rich_text_box', 'Body', 0, 0, 0, 1, 1, 1, '', 3),
+(107, 16, 'image', 'image', 'Image', 0, 0, 0, 1, 1, 1, '', 4),
+(108, 16, 'slug', 'text', 'Slug', 0, 0, 0, 1, 1, 1, '', 5),
+(109, 16, 'meta_description', 'text', 'Meta Description', 0, 0, 0, 1, 1, 1, '', 6),
+(110, 16, 'metal_keywords', 'text', 'Metal Keywords', 0, 0, 0, 1, 1, 1, '', 7),
+(111, 16, 'seo_title', 'text', 'Seo Title', 0, 0, 0, 1, 1, 1, '', 8),
+(112, 16, 'cover', 'checkbox', 'Cover', 0, 0, 0, 1, 1, 1, '', 9),
+(113, 16, 'category', 'select_dropdown', 'Category', 0, 0, 0, 1, 1, 1, '{"relationship":{"key":"id","label":"name"}}', 10),
+(114, 16, 'status', 'select_dropdown', 'Status', 0, 0, 0, 1, 1, 1, '{"relationship":{"key":"id","label":"status","status_slug":"admin/status"}}', 11),
+(115, 16, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 1, 0, 0, '', 12),
+(116, 16, 'updated_at', 'timestamp', 'Updated At', 0, 1, 1, 0, 0, 0, '', 13);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `cms_dashboard`
+-- Estructura de tabla para la tabla `data_types`
 --
 
-CREATE TABLE `cms_dashboard` (
+CREATE TABLE `data_types` (
   `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `id_cms_privileges` int(11) DEFAULT NULL,
-  `content` longtext COLLATE utf8_unicode_ci,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cms_email_queues`
---
-
-CREATE TABLE `cms_email_queues` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `send_at` datetime DEFAULT NULL,
-  `email_recipient` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email_from_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email_from_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email_cc_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email_subject` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email_content` text COLLATE utf8_unicode_ci,
-  `email_attachments` text COLLATE utf8_unicode_ci,
-  `is_sent` tinyint(1) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cms_email_templates`
---
-
-CREATE TABLE `cms_email_templates` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `slug` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `subject` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `content` longtext COLLATE utf8_unicode_ci,
-  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `from_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `from_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `cc_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `cms_email_templates`
---
-
-INSERT INTO `cms_email_templates` (`id`, `name`, `slug`, `subject`, `content`, `description`, `from_name`, `from_email`, `cc_email`, `created_at`, `updated_at`) VALUES
-(1, 'Email Template Forgot Password Backend', 'forgot_password_backend', NULL, '<p>Hi,</p><p>Someone requested forgot password, here is your new password : </p><p>[password]</p><p><br></p><p>--</p><p>Regards,</p><p>Admin</p>', '[password]', 'System', 'system@crudbooster.com', NULL, '2017-05-19 06:45:54', NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cms_logs`
---
-
-CREATE TABLE `cms_logs` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `ipaddress` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `useragent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `id_cms_users` int(11) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `cms_logs`
---
-
-INSERT INTO `cms_logs` (`id`, `ipaddress`, `useragent`, `url`, `description`, `id_cms_users`, `created_at`, `updated_at`) VALUES
-(1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'admin@crudbooster.com login with IP Address 127.0.0.1', 1, '2017-05-19 06:56:52', NULL),
-(2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/users/edit-save/1', 'Update data Elkin Garzon at Users', 1, '2017-05-19 06:57:48', NULL),
-(3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-19 07:08:16', NULL),
-(4, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-20 20:02:49', NULL),
-(5, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-20 20:16:49', NULL),
-(6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/statuses/add-save', 'Add New Data activo at status', 1, '2017-05-20 20:17:12', NULL),
-(7, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/statuses/add-save', 'Add New Data inactivo at status', 1, '2017-05-20 20:17:44', NULL),
-(8, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/statuses/add-save', 'Add New Data pause at status', 1, '2017-05-20 20:46:45', NULL),
-(9, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-20 21:03:27', NULL),
-(10, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/banner_categoris/add-save', 'Add New Data home at banner category', 1, '2017-05-20 21:05:57', NULL),
-(11, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-20 21:06:03', NULL),
-(12, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-20 21:07:51', NULL),
-(13, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-20 21:09:36', NULL),
-(14, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-20 21:12:32', NULL),
-(15, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-20 21:15:54', NULL),
-(16, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-20 21:17:36', NULL),
-(17, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/banners/add-save', 'Add New Data banner principal at banner', 1, '2017-05-20 21:23:48', NULL),
-(18, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 00:18:28', NULL),
-(19, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 00:25:19', NULL),
-(20, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/banners/add-save', 'Add New Data banner 2 at banner', 1, '2017-05-21 00:45:52', NULL),
-(21, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/add-save', 'Add New Data banners at Menu Management', 1, '2017-05-21 01:45:37', NULL),
-(22, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/edit-save/4', 'Update data banners at Menu Management', 1, '2017-05-21 01:47:20', NULL),
-(23, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/edit-save/4', 'Update data banners at Menu Management', 1, '2017-05-21 01:47:49', NULL),
-(24, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/edit-save/4', 'Update data banners at Menu Management', 1, '2017-05-21 01:48:35', NULL),
-(25, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 02:01:22', NULL),
-(26, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/categories/add-save', 'Add New Data 1 at category', 1, '2017-05-21 02:02:18', NULL),
-(27, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 02:17:34', NULL),
-(28, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 02:22:21', NULL),
-(29, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 02:24:01', NULL),
-(30, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 02:26:08', NULL),
-(31, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 02:29:00', NULL),
-(32, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 02:31:23', NULL),
-(33, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/add-save', 'Add New Data page at Menu Management', 1, '2017-05-21 02:34:57', NULL),
-(34, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:06:40', NULL),
-(35, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:07:41', NULL),
-(36, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/users/add-save', 'Add New Data usuario at Users', 1, '2017-05-21 05:10:12', NULL),
-(37, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'user@user.com login with IP Address 127.0.0.1', 2, '2017-05-21 05:10:46', NULL),
-(38, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/edit-save/7', 'Update data page at Menu Management', 1, '2017-05-21 05:16:01', NULL),
-(39, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/edit-save/4', 'Update data banners at Menu Management', 1, '2017-05-21 05:17:08', NULL),
-(40, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/edit-save/5', 'Update data category at Menu Management', 1, '2017-05-21 05:22:21', NULL),
-(41, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/edit-save/2', 'Update data banner category at Menu Management', 1, '2017-05-21 05:23:01', NULL),
-(42, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:23:09', NULL),
-(43, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/categories', 'Try view the data :name at category', 2, '2017-05-21 05:25:30', NULL),
-(44, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/categories', 'Try view the data :name at category', 2, '2017-05-21 05:25:37', NULL),
-(45, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/banners', 'Try view the data :name at banner', 2, '2017-05-21 05:26:16', NULL),
-(46, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:27:05', NULL),
-(47, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:29:05', NULL),
-(48, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/logout', 'user@user.com logout', 2, '2017-05-21 05:30:43', NULL),
-(49, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:31:42', NULL),
-(50, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:33:02', NULL),
-(51, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'user@user.com login with IP Address 127.0.0.1', 2, '2017-05-21 05:34:06', NULL),
-(52, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:37:53', NULL),
-(53, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/add-save', 'Add New Data banner at Menu Management', 1, '2017-05-21 05:41:48', NULL),
-(54, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/add-save', 'Add New Data page at Menu Management', 1, '2017-05-21 05:43:06', NULL),
-(55, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:43:50', NULL),
-(56, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/edit-save/8', 'Update data banner category at Menu Management', 1, '2017-05-21 05:46:30', NULL),
-(57, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:47:32', NULL),
-(58, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:49:27', NULL),
-(59, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/edit-save/10', 'Update data category at Menu Management', 1, '2017-05-21 05:50:19', NULL),
-(60, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/menu_management/edit-save/9', 'Update data banner at Menu Management', 1, '2017-05-21 05:50:52', NULL),
-(61, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:55:07', NULL),
-(62, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 05:58:20', NULL),
-(63, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 06:15:15', NULL),
-(64, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 07:14:51', NULL),
-(65, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'user@user.com login with IP Address 127.0.0.1', 2, '2017-05-21 07:15:12', NULL),
-(66, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 07:24:25', NULL),
-(67, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 07:38:42', NULL),
-(68, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 07:39:33', NULL),
-(69, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/logout', 'user@user.com logout', 2, '2017-05-21 07:39:58', NULL),
-(70, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'user@user.com login with IP Address 127.0.0.1', 2, '2017-05-21 07:40:35', NULL),
-(71, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 07:47:00', NULL),
-(72, '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'http://localhost:8000/admin/login', 'elkingarzonyaya@gmail.com login with IP Address 127.0.0.1', 1, '2017-05-21 08:09:00', NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cms_menus`
---
-
-CREATE TABLE `cms_menus` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'url',
-  `path` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `color` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `display_name_singular` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `display_name_plural` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `icon` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `parent_id` int(11) DEFAULT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT '1',
-  `is_dashboard` tinyint(1) NOT NULL DEFAULT '0',
-  `id_cms_privileges` int(11) DEFAULT NULL,
-  `sorting` int(11) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `cms_menus`
---
-
-INSERT INTO `cms_menus` (`id`, `name`, `type`, `path`, `color`, `icon`, `parent_id`, `is_active`, `is_dashboard`, `id_cms_privileges`, `sorting`, `created_at`, `updated_at`) VALUES
-(1, 'status', 'Route', 'AdminStatusesControllerGetIndex', NULL, 'fa fa-check', 0, 1, 0, 1, 3, '2017-05-20 20:14:52', NULL),
-(2, 'banner category', 'Route', 'AdminBannerCategorisControllerGetIndex', 'normal', 'fa fa-th-list', 4, 1, 0, 1, 1, '2017-05-20 21:03:21', '2017-05-21 05:23:01'),
-(3, 'banner', 'Route', 'AdminBannersControllerGetIndex', NULL, 'fa fa-photo', 4, 1, 0, 1, 2, '2017-05-20 21:13:24', NULL),
-(4, 'banners', 'Module', NULL, 'normal', 'fa fa-folder', 0, 1, 0, 1, 2, '2017-05-21 01:45:37', '2017-05-21 05:17:07'),
-(5, 'category', 'Route', 'AdminCategoriesControllerGetIndex', 'normal', 'fa fa-th-list', 7, 1, 0, 1, 1, '2017-05-21 02:00:00', '2017-05-21 05:22:21'),
-(6, 'pages', 'Route', 'AdminPagesControllerGetIndex', NULL, 'fa fa-file-text-o', 7, 1, 0, 1, 2, '2017-05-21 02:04:33', NULL),
-(7, 'page', 'Module', 'pages', 'normal', 'fa fa-folder', 0, 1, 0, 1, 1, '2017-05-21 02:34:57', '2017-05-21 05:16:01'),
-(8, 'banner category', 'Route', 'AdminBannerCategorisControllerGetIndex', 'normal', 'fa fa-th-list', 12, 1, 0, 2, 1, '2017-05-21 05:08:53', '2017-05-21 05:46:29'),
-(9, 'banner', 'Route', 'AdminBannersControllerGetIndex', 'normal', 'fa fa-picture-o', 12, 1, 0, 2, 2, '2017-05-21 05:24:39', '2017-05-21 05:50:52'),
-(10, 'category', 'Route', 'AdminCategoriesControllerGetIndex', 'normal', 'fa fa-th-list', 13, 1, 0, 2, 1, '2017-05-21 05:24:39', '2017-05-21 05:50:19'),
-(11, 'pages', 'Route', 'AdminPagesControllerGetIndex', 'normal', 'fa fa-file-text-o', 13, 1, 0, 2, 2, '2017-05-21 05:24:39', NULL),
-(12, 'banner', 'Module', 'banners', 'normal', 'fa fa-folder', 0, 1, 0, 2, 2, '2017-05-21 05:41:48', NULL),
-(13, 'page', 'Module', 'pages', 'normal', 'fa fa-folder', 0, 1, 0, 2, 1, '2017-05-21 05:43:06', NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cms_moduls`
---
-
-CREATE TABLE `cms_moduls` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `icon` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `path` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `table_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `model_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `controller` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `is_protected` tinyint(1) NOT NULL DEFAULT '0',
-  `is_active` tinyint(1) NOT NULL DEFAULT '0',
+  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `generate_permissions` tinyint(1) NOT NULL DEFAULT '0',
+  `server_side` tinyint(4) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Volcado de datos para la tabla `cms_moduls`
+-- Volcado de datos para la tabla `data_types`
 --
 
-INSERT INTO `cms_moduls` (`id`, `name`, `icon`, `path`, `table_name`, `controller`, `is_protected`, `is_active`, `created_at`, `updated_at`) VALUES
-(1, 'Notifications', 'fa fa-cog', 'notifications', 'cms_notifications', 'NotificationsController', 1, 1, '2017-05-19 06:45:52', NULL),
-(2, 'Privileges', 'fa fa-cog', 'privileges', 'cms_privileges', 'PrivilegesController', 1, 1, '2017-05-19 06:45:52', NULL),
-(3, 'Privileges Roles', 'fa fa-cog', 'privileges_roles', 'cms_privileges_roles', 'PrivilegesRolesController', 1, 1, '2017-05-19 06:45:52', NULL),
-(4, 'Users', 'fa fa-users', 'users', 'cms_users', 'AdminCmsUsersController', 0, 1, '2017-05-19 06:45:52', NULL),
-(5, 'Settings', 'fa fa-cog', 'settings', 'cms_settings', 'SettingsController', 1, 1, '2017-05-19 06:45:52', NULL),
-(6, 'Module Generator', 'fa fa-database', 'module_generator', 'cms_moduls', 'ModulsController', 1, 1, '2017-05-19 06:45:52', NULL),
-(7, 'Menu Management', 'fa fa-bars', 'menu_management', 'cms_menus', 'MenusController', 1, 1, '2017-05-19 06:45:52', NULL),
-(8, 'Email Template', 'fa fa-envelope-o', 'email_templates', 'cms_email_templates', 'EmailTemplatesController', 1, 1, '2017-05-19 06:45:52', NULL),
-(9, 'Statistic Builder', 'fa fa-dashboard', 'statistic_builder', 'cms_statistics', 'StatisticBuilderController', 1, 1, '2017-05-19 06:45:52', NULL),
-(10, 'API Generator', 'fa fa-cloud-download', 'api_generator', '', 'ApiCustomController', 1, 1, '2017-05-19 06:45:52', NULL),
-(11, 'Logs', 'fa fa-flag-o', 'logs', 'cms_logs', 'LogsController', 1, 1, '2017-05-19 06:45:52', NULL),
-(12, 'status', 'fa fa-check', 'statuses', 'statuses', 'AdminStatusesController', 0, 0, '2017-05-20 20:14:52', NULL),
-(13, 'banner category', 'fa fa-camera', 'banner_categoris', 'banner_categoris', 'AdminBannerCategorisController', 0, 0, '2017-05-20 21:03:21', NULL),
-(14, 'banner', 'fa fa-th-list', 'banners', 'banners', 'AdminBannersController', 0, 0, '2017-05-20 21:13:23', NULL),
-(15, 'category', 'fa fa-folder', 'categories', 'categories', 'AdminCategoriesController', 0, 0, '2017-05-21 01:59:59', NULL),
-(16, 'pages', 'fa fa-file-text-o', 'pages', 'pages', 'AdminPagesController', 0, 0, '2017-05-21 02:04:33', NULL);
+INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `display_name_plural`, `icon`, `model_name`, `controller`, `description`, `generate_permissions`, `server_side`, `created_at`, `updated_at`) VALUES
+(3, 'users', 'users', 'User', 'Users', 'voyager-person', 'TCG\\Voyager\\Models\\User', '', '', 1, 0, '2017-05-29 17:34:04', '2017-05-29 17:34:04'),
+(4, 'categories', 'categories', 'Category', 'Categories', 'voyager-categories', 'TCG\\Voyager\\Models\\Category', '', '', 1, 0, '2017-05-29 17:34:05', '2017-05-29 17:34:05'),
+(5, 'menus', 'menus', 'Menu', 'Menus', 'voyager-list', 'TCG\\Voyager\\Models\\Menu', '', '', 1, 0, '2017-05-29 17:34:05', '2017-05-29 17:34:05'),
+(6, 'roles', 'roles', 'Role', 'Roles', 'voyager-lock', 'TCG\\Voyager\\Models\\Role', '', '', 1, 0, '2017-05-29 17:34:05', '2017-05-29 17:34:05'),
+(8, 'statuses', 'status', 'Status', 'Statuses', 'voyager-check-circle', 'App\\Status', '', '', 1, 1, '2017-05-29 17:53:42', '2017-05-29 17:56:12'),
+(9, 'banner_categories', 'banner-category', 'Banner Category', 'Banner Categories', 'voyager-plus', 'App\\BannerCategory', '', '', 1, 1, '2017-05-29 18:04:18', '2017-05-29 18:04:18'),
+(10, 'banners', 'banners', 'Banner', 'Banners', 'voyager-images', 'App\\Banner', '', '', 1, 0, '2017-05-29 19:24:55', '2017-05-29 19:24:55'),
+(11, 'category_pages', 'category-pages', 'Category Page', 'Category Pages', 'voyager-folder', 'App\\CategoryPage', '', '', 1, 0, '2017-05-31 01:50:19', '2017-05-31 01:50:19'),
+(12, 'pages', 'pages', 'Page', 'Pages', 'voyager-book', 'App\\Page', '', '', 1, 0, '2017-05-31 02:22:25', '2017-05-31 02:22:25'),
+(13, 'news_categories', 'news-category', 'News Category', 'News Categories', 'voyager-folder', 'App\\NewsCategory', '', '', 1, 0, '2017-06-02 00:59:46', '2017-06-02 01:03:04'),
+(16, 'news', 'news', 'News', 'News', 'voyager-file-text', 'App\\News', '', '', 1, 0, '2017-06-02 02:07:02', '2017-06-02 02:07:02');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `cms_notifications`
+-- Estructura de tabla para la tabla `menus`
 --
 
-CREATE TABLE `cms_notifications` (
+CREATE TABLE `menus` (
   `id` int(10) UNSIGNED NOT NULL,
-  `id_cms_users` int(11) DEFAULT NULL,
-  `content` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `is_read` tinyint(1) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cms_privileges`
---
-
-CREATE TABLE `cms_privileges` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `is_superadmin` tinyint(1) DEFAULT NULL,
-  `theme_color` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Volcado de datos para la tabla `cms_privileges`
+-- Volcado de datos para la tabla `menus`
 --
 
-INSERT INTO `cms_privileges` (`id`, `name`, `is_superadmin`, `theme_color`, `created_at`, `updated_at`) VALUES
-(1, 'Super Administrator', 1, 'skin-red', '2017-05-19 06:45:52', NULL),
-(2, 'user', 0, 'skin-blue', NULL, NULL);
+INSERT INTO `menus` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'admin', '2017-05-29 17:34:08', '2017-05-29 17:34:08');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `cms_privileges_roles`
+-- Estructura de tabla para la tabla `menu_items`
 --
 
-CREATE TABLE `cms_privileges_roles` (
+CREATE TABLE `menu_items` (
   `id` int(10) UNSIGNED NOT NULL,
-  `is_visible` tinyint(1) DEFAULT NULL,
-  `is_create` tinyint(1) DEFAULT NULL,
-  `is_read` tinyint(1) DEFAULT NULL,
-  `is_edit` tinyint(1) DEFAULT NULL,
-  `is_delete` tinyint(1) DEFAULT NULL,
-  `id_cms_privileges` int(11) DEFAULT NULL,
-  `id_cms_moduls` int(11) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `cms_privileges_roles`
---
-
-INSERT INTO `cms_privileges_roles` (`id`, `is_visible`, `is_create`, `is_read`, `is_edit`, `is_delete`, `id_cms_privileges`, `id_cms_moduls`, `created_at`, `updated_at`) VALUES
-(1, 1, 0, 0, 0, 0, 1, 1, '2017-05-19 06:45:52', NULL),
-(2, 1, 1, 1, 1, 1, 1, 2, '2017-05-19 06:45:52', NULL),
-(3, 0, 1, 1, 1, 1, 1, 3, '2017-05-19 06:45:52', NULL),
-(4, 1, 1, 1, 1, 1, 1, 4, '2017-05-19 06:45:53', NULL),
-(5, 1, 1, 1, 1, 1, 1, 5, '2017-05-19 06:45:53', NULL),
-(6, 1, 1, 1, 1, 1, 1, 6, '2017-05-19 06:45:53', NULL),
-(7, 1, 1, 1, 1, 1, 1, 7, '2017-05-19 06:45:53', NULL),
-(8, 1, 1, 1, 1, 1, 1, 8, '2017-05-19 06:45:53', NULL),
-(9, 1, 1, 1, 1, 1, 1, 9, '2017-05-19 06:45:53', NULL),
-(10, 1, 1, 1, 1, 1, 1, 10, '2017-05-19 06:45:53', NULL),
-(11, 1, 0, 1, 0, 1, 1, 11, '2017-05-19 06:45:53', NULL),
-(12, 1, 1, 1, 1, 1, 1, 12, NULL, NULL),
-(13, 1, 1, 1, 1, 1, 1, 13, NULL, NULL),
-(14, 1, 1, 1, 1, 1, 1, 14, NULL, NULL),
-(15, 1, 1, 1, 1, 1, 1, 15, NULL, NULL),
-(16, 1, 1, 1, 1, 1, 1, 16, NULL, NULL),
-(17, 1, 0, 1, 0, 0, 2, 13, NULL, NULL),
-(18, 1, 1, 1, 1, 1, 2, 14, NULL, NULL),
-(19, 1, 0, 1, 0, 0, 2, 15, NULL, NULL),
-(20, 1, 1, 1, 1, 0, 2, 16, NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cms_settings`
---
-
-CREATE TABLE `cms_settings` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `content` text COLLATE utf8_unicode_ci,
-  `content_input_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `dataenum` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `helper` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `menu_id` int(10) UNSIGNED DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `target` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '_self',
+  `icon_class` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `color` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `parent_id` int(11) DEFAULT NULL,
+  `order` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `group_setting` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `label` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+  `route` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `parameters` text COLLATE utf8_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Volcado de datos para la tabla `cms_settings`
+-- Volcado de datos para la tabla `menu_items`
 --
 
-INSERT INTO `cms_settings` (`id`, `name`, `content`, `content_input_type`, `dataenum`, `helper`, `created_at`, `updated_at`, `group_setting`, `label`) VALUES
-(1, 'login_background_color', NULL, 'text', NULL, 'Input hexacode', '2017-05-19 06:45:53', NULL, 'Login Register Style', 'Login Background Color'),
-(2, 'login_font_color', NULL, 'text', NULL, 'Input hexacode', '2017-05-19 06:45:53', NULL, 'Login Register Style', 'Login Font Color'),
-(3, 'login_background_image', NULL, 'upload_image', NULL, NULL, '2017-05-19 06:45:53', NULL, 'Login Register Style', 'Login Background Image'),
-(4, 'email_sender', 'elkingarzonyaya@gmail.com', 'text', NULL, NULL, '2017-05-19 06:45:53', NULL, 'Email Setting', 'Email Sender'),
-(5, 'smtp_driver', 'smtp', 'select', 'smtp,mail,sendmail', NULL, '2017-05-19 06:45:53', NULL, 'Email Setting', 'Mail Driver'),
-(6, 'smtp_host', 'smtp.gmail.com', 'text', NULL, NULL, '2017-05-19 06:45:53', NULL, 'Email Setting', 'SMTP Host'),
-(7, 'smtp_port', '587', 'text', NULL, 'default 25', '2017-05-19 06:45:53', NULL, 'Email Setting', 'SMTP Port'),
-(8, 'smtp_username', 'dosapruebasgrande@gmail,com', 'text', NULL, NULL, '2017-05-19 06:45:53', NULL, 'Email Setting', 'SMTP Username'),
-(9, 'smtp_password', 'Elkin2831', 'text', NULL, NULL, '2017-05-19 06:45:53', NULL, 'Email Setting', 'SMTP Password'),
-(10, 'appname', 'CRUDBooster', 'text', NULL, NULL, '2017-05-19 06:45:53', NULL, 'Application Setting', 'Application Name'),
-(11, 'default_paper_size', 'Legal', 'text', NULL, 'Paper size, ex : A4, Legal, etc', '2017-05-19 06:45:53', NULL, 'Application Setting', 'Default Paper Print Size'),
-(12, 'logo', '', 'upload_image', NULL, NULL, '2017-05-19 06:45:53', NULL, 'Application Setting', 'Logo'),
-(13, 'favicon', '', 'upload_image', NULL, NULL, '2017-05-19 06:45:53', NULL, 'Application Setting', 'Favicon'),
-(14, 'api_debug_mode', 'true', 'select', 'true,false', NULL, '2017-05-19 06:45:53', NULL, 'Application Setting', 'API Debug Mode'),
-(15, 'google_api_key', '', 'text', NULL, NULL, '2017-05-19 06:45:53', NULL, 'Application Setting', 'Google API Key'),
-(16, 'google_fcm_key', '', 'text', NULL, NULL, '2017-05-19 06:45:53', NULL, 'Application Setting', 'Google FCM Key');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cms_statistics`
---
-
-CREATE TABLE `cms_statistics` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `slug` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cms_statistic_components`
---
-
-CREATE TABLE `cms_statistic_components` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `id_cms_statistics` int(11) DEFAULT NULL,
-  `componentID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `component_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `area_name` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `sorting` int(11) DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `config` longtext COLLATE utf8_unicode_ci,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cms_users`
---
-
-CREATE TABLE `cms_users` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `photo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `id_cms_privileges` int(11) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `status` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `cms_users`
---
-
-INSERT INTO `cms_users` (`id`, `name`, `photo`, `email`, `password`, `id_cms_privileges`, `created_at`, `updated_at`, `status`) VALUES
-(1, 'Elkin Garzon', 'uploads/2017-05/usuario.png', 'elkingarzonyaya@gmail.com', '$2y$10$n7Qqkin2VkuuxQUoZ/3hHez5RpLUPFm00.XDv3a37eTT660k3bpCu', 1, '2017-05-19 06:45:52', '2017-05-19 06:57:48', 'Active'),
-(2, 'usuario', 'uploads/2017-05/user.png', 'user@user.com', '$2y$10$7st3S5nsZO4xaLS8P15gS.M5PMKFo30g/9ChlcqXrbXoXRTcdzmlq', 2, '2017-05-21 05:10:12', NULL, NULL);
+INSERT INTO `menu_items` (`id`, `menu_id`, `title`, `url`, `target`, `icon_class`, `color`, `parent_id`, `order`, `created_at`, `updated_at`, `route`, `parameters`) VALUES
+(1, 1, 'Dashboard', '/admin', '_self', 'voyager-boat', NULL, NULL, 1, '2017-05-29 17:34:08', '2017-05-29 17:34:08', NULL, NULL),
+(2, 1, 'Media', '/admin/media', '_self', 'voyager-images', NULL, NULL, 9, '2017-05-29 17:34:08', '2017-06-02 01:13:07', NULL, NULL),
+(4, 1, 'Users', '/admin/users', '_self', 'voyager-person', NULL, NULL, 8, '2017-05-29 17:34:08', '2017-06-02 01:13:07', NULL, NULL),
+(5, 1, 'News', '/admin/categories', '_self', 'voyager-categories', '#000000', NULL, 6, '2017-05-29 17:34:08', '2017-06-02 01:13:07', NULL, ''),
+(6, 1, 'Pages', '/admin/pages', '_self', 'voyager-file-text', NULL, 16, 2, '2017-05-29 17:34:08', '2017-05-31 02:07:39', NULL, NULL),
+(7, 1, 'Roles', '/admin/roles', '_self', 'voyager-lock', NULL, NULL, 3, '2017-05-29 17:34:08', '2017-05-29 17:40:40', NULL, NULL),
+(8, 1, 'Tools', '', '_self', 'voyager-tools', NULL, NULL, 10, '2017-05-29 17:34:08', '2017-05-31 02:07:37', NULL, NULL),
+(9, 1, 'Menu Builder', '/admin/menus', '_self', 'voyager-list', NULL, 8, 1, '2017-05-29 17:34:08', '2017-05-29 17:40:32', NULL, NULL),
+(10, 1, 'Database', '/admin/database', '_self', 'voyager-data', NULL, 8, 2, '2017-05-29 17:34:08', '2017-05-29 17:40:32', NULL, NULL),
+(11, 1, 'Settings', '/admin/settings', '_self', 'voyager-settings', NULL, NULL, 11, '2017-05-29 17:34:09', '2017-05-31 02:07:37', NULL, NULL),
+(12, 1, 'status', '/admin/status', '_self', 'voyager-check-circle', '#000000', NULL, 2, '2017-05-29 17:40:18', '2017-05-29 17:40:40', NULL, ''),
+(13, 1, 'banner category', '/admin/banner-category', '_self', 'voyager-camera', '#000000', 14, 1, '2017-05-29 18:06:28', '2017-06-02 03:02:21', NULL, ''),
+(14, 1, 'banner', '/admin/banner', '_self', 'voyager-categories', '#000000', NULL, 4, '2017-05-29 18:07:41', '2017-06-02 03:01:18', NULL, ''),
+(15, 1, 'banner', '/admin/banners', '_self', 'voyager-images', '#000000', 14, 2, '2017-05-29 19:26:16', '2017-05-29 19:27:31', NULL, ''),
+(16, 1, 'pages', '/admin/pages', '_self', 'voyager-categories', '#000000', NULL, 5, '2017-05-31 01:44:41', '2017-06-02 02:37:15', NULL, ''),
+(17, 1, 'category pages', '/admin/category-pages', '_self', 'voyager-folder', '#000000', 16, 1, '2017-05-31 01:54:22', '2017-05-31 02:07:39', NULL, ''),
+(18, 1, 'News category', '/admin/news-category', '_self', 'voyager-news', '#000000', 5, 1, '2017-06-02 01:05:35', '2017-06-02 02:34:33', NULL, ''),
+(19, 1, 'News', '/admin/news', '_self', 'voyager-file-text', '#000000', 5, 2, '2017-06-02 02:13:16', '2017-06-02 02:13:28', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -569,33 +318,77 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '2016_08_07_145904_add_table_cms_apicustom', 1),
-(2, '2016_08_07_150834_add_table_cms_dashboard', 1),
-(3, '2016_08_07_151210_add_table_cms_logs', 1),
-(4, '2016_08_07_152014_add_table_cms_privileges', 1),
-(5, '2016_08_07_152214_add_table_cms_privileges_roles', 1),
-(6, '2016_08_07_152320_add_table_cms_settings', 1),
-(7, '2016_08_07_152421_add_table_cms_users', 1),
-(8, '2016_08_07_154624_add_table_cms_moduls', 1),
-(9, '2016_08_17_225409_add_status_cms_users', 1),
-(10, '2016_08_20_125418_add_table_cms_notifications', 1),
-(11, '2016_09_04_033706_add_table_cms_email_queues', 1),
-(12, '2016_09_16_035347_add_group_setting', 1),
-(13, '2016_09_16_045425_add_label_setting', 1),
-(14, '2016_09_17_104728_create_nullable_cms_apicustom', 1),
-(15, '2016_10_01_141740_add_method_type_apicustom', 1),
-(16, '2016_10_01_141846_add_parameters_apicustom', 1),
-(17, '2016_10_01_141934_add_responses_apicustom', 1),
-(18, '2016_10_01_144826_add_table_apikey', 1),
-(19, '2016_11_14_141657_create_cms_menus', 1),
-(20, '2016_11_15_132350_create_cms_email_templates', 1),
-(21, '2016_11_15_190410_create_cms_statistics', 1),
-(22, '2016_11_17_102740_create_cms_statistic_components', 1),
-(23, '2017_05_20_151035_create_statuses_table', 2),
-(26, '2017_05_20_155414_create_banner_categoris_table', 3),
-(27, '2017_05_20_155521_create_banners_table', 3),
-(28, '2017_05_20_204932_create_categories_table', 4),
-(30, '2017_05_20_205007_create_pages_table', 5);
+(1, '2014_10_12_000000_create_users_table', 1),
+(2, '2014_10_12_100000_create_password_resets_table', 1),
+(3, '2016_01_01_000000_add_voyager_user_fields', 1),
+(4, '2016_01_01_000000_create_data_types_table', 1),
+(5, '2016_01_01_000000_create_pages_table', 1),
+(6, '2016_01_01_000000_create_posts_table', 1),
+(7, '2016_02_15_204651_create_categories_table', 1),
+(8, '2016_05_19_173453_create_menu_table', 1),
+(9, '2016_10_21_190000_create_roles_table', 1),
+(10, '2016_10_21_190000_create_settings_table', 1),
+(11, '2016_11_30_135954_create_permission_table', 1),
+(12, '2016_11_30_141208_create_permission_role_table', 1),
+(13, '2016_12_26_201236_data_types__add__server_side', 1),
+(14, '2017_01_13_000000_add_route_to_menu_items_table', 1),
+(15, '2017_01_14_005015_create_translations_table', 1),
+(16, '2017_01_15_000000_add_permission_group_id_to_permissions_table', 1),
+(17, '2017_01_15_000000_create_permission_groups_table', 1),
+(18, '2017_01_15_000000_make_table_name_nullable_in_permissions_table', 1),
+(19, '2017_03_06_000000_add_controller_to_data_types_table', 1),
+(20, '2017_04_21_000000_add_order_to_data_rows_table', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `news`
+--
+
+CREATE TABLE `news` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `body` varchar(3000) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `meta_description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `metal_keywords` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `seo_title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `cover` int(11) DEFAULT NULL,
+  `category` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `news`
+--
+
+INSERT INTO `news` (`id`, `title`, `body`, `image`, `slug`, `meta_description`, `metal_keywords`, `seo_title`, `cover`, `category`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'noticias de prueba', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod&nbsp;tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,&nbsp;quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo&nbsp;consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse&nbsp;cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non&nbsp;proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>', 'news/June2017/idCy5cxfi3SCl0Xv6rau.jpg', 'noticias de prueba', 'noticia de prueba dos', 'prueba, noticia, hola, mundo', 'noticia', 0, 1, 1, '2017-06-02 12:18:00', '2017-06-02 02:18:57');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `news_categories`
+--
+
+CREATE TABLE `news_categories` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `news_categories`
+--
+
+INSERT INTO `news_categories` (`id`, `name`, `slug`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'noticias', 'noticias', 1, '2017-06-02 02:14:50', '2017-06-02 02:14:50');
 
 -- --------------------------------------------------------
 
@@ -606,13 +399,247 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 CREATE TABLE `pages` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `content` longtext COLLATE utf8_unicode_ci,
-  `banner` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `categories_id` int(11) DEFAULT NULL,
-  `statuses_id` int(11) DEFAULT NULL,
+  `body` longtext COLLATE utf8_unicode_ci,
+  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `meta_description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `meta_keywords` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `category_page` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `pages`
+--
+
+INSERT INTO `pages` (`id`, `title`, `body`, `image`, `slug`, `meta_description`, `meta_keywords`, `category_page`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'home', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium eligendi, delectus eaque explicabo asperiores consequuntur ipsum voluptatibus facere commodi libero vero est accusantium rerum, officia sint cupiditate perspiciatis deleniti architecto.</p>', 'pages/May2017/r11iqjvkU6nWsExgUO3X.jpg', 'home', 'primera pagina creada', 'primera, pagina, creada', 1, 1, '2017-05-31 03:14:01', '2017-05-31 03:14:01');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `permissions`
+--
+
+CREATE TABLE `permissions` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `key` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `table_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `permission_group_id` int(10) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `permissions`
+--
+
+INSERT INTO `permissions` (`id`, `key`, `table_name`, `created_at`, `updated_at`, `permission_group_id`) VALUES
+(1, 'browse_admin', NULL, '2017-05-29 17:34:09', '2017-05-29 17:34:09', NULL),
+(2, 'browse_database', NULL, '2017-05-29 17:34:09', '2017-05-29 17:34:09', NULL),
+(3, 'browse_media', NULL, '2017-05-29 17:34:09', '2017-05-29 17:34:09', NULL),
+(4, 'browse_settings', NULL, '2017-05-29 17:34:09', '2017-05-29 17:34:09', NULL),
+(5, 'browse_menus', 'menus', '2017-05-29 17:34:09', '2017-05-29 17:34:09', NULL),
+(6, 'read_menus', 'menus', '2017-05-29 17:34:09', '2017-05-29 17:34:09', NULL),
+(7, 'edit_menus', 'menus', '2017-05-29 17:34:09', '2017-05-29 17:34:09', NULL),
+(8, 'add_menus', 'menus', '2017-05-29 17:34:09', '2017-05-29 17:34:09', NULL),
+(9, 'delete_menus', 'menus', '2017-05-29 17:34:09', '2017-05-29 17:34:09', NULL),
+(15, 'browse_roles', 'roles', '2017-05-29 17:34:10', '2017-05-29 17:34:10', NULL),
+(16, 'read_roles', 'roles', '2017-05-29 17:34:10', '2017-05-29 17:34:10', NULL),
+(17, 'edit_roles', 'roles', '2017-05-29 17:34:10', '2017-05-29 17:34:10', NULL),
+(18, 'add_roles', 'roles', '2017-05-29 17:34:10', '2017-05-29 17:34:10', NULL),
+(19, 'delete_roles', 'roles', '2017-05-29 17:34:10', '2017-05-29 17:34:10', NULL),
+(20, 'browse_users', 'users', '2017-05-29 17:34:10', '2017-05-29 17:34:10', NULL),
+(21, 'read_users', 'users', '2017-05-29 17:34:10', '2017-05-29 17:34:10', NULL),
+(22, 'edit_users', 'users', '2017-05-29 17:34:10', '2017-05-29 17:34:10', NULL),
+(23, 'add_users', 'users', '2017-05-29 17:34:11', '2017-05-29 17:34:11', NULL),
+(24, 'delete_users', 'users', '2017-05-29 17:34:11', '2017-05-29 17:34:11', NULL),
+(30, 'browse_categories', 'categories', '2017-05-29 17:34:11', '2017-05-29 17:34:11', NULL),
+(31, 'read_categories', 'categories', '2017-05-29 17:34:11', '2017-05-29 17:34:11', NULL),
+(32, 'edit_categories', 'categories', '2017-05-29 17:34:11', '2017-05-29 17:34:11', NULL),
+(33, 'add_categories', 'categories', '2017-05-29 17:34:11', '2017-05-29 17:34:11', NULL),
+(34, 'delete_categories', 'categories', '2017-05-29 17:34:11', '2017-05-29 17:34:11', NULL),
+(40, 'browse_statuses', 'statuses', '2017-05-29 17:53:42', '2017-05-29 17:53:42', NULL),
+(41, 'read_statuses', 'statuses', '2017-05-29 17:53:42', '2017-05-29 17:53:42', NULL),
+(42, 'edit_statuses', 'statuses', '2017-05-29 17:53:42', '2017-05-29 17:53:42', NULL),
+(43, 'add_statuses', 'statuses', '2017-05-29 17:53:42', '2017-05-29 17:53:42', NULL),
+(44, 'delete_statuses', 'statuses', '2017-05-29 17:53:42', '2017-05-29 17:53:42', NULL),
+(45, 'browse_banner_categories', 'banner_categories', '2017-05-29 18:04:19', '2017-05-29 18:04:19', NULL),
+(46, 'read_banner_categories', 'banner_categories', '2017-05-29 18:04:19', '2017-05-29 18:04:19', NULL),
+(47, 'edit_banner_categories', 'banner_categories', '2017-05-29 18:04:19', '2017-05-29 18:04:19', NULL),
+(48, 'add_banner_categories', 'banner_categories', '2017-05-29 18:04:19', '2017-05-29 18:04:19', NULL),
+(49, 'delete_banner_categories', 'banner_categories', '2017-05-29 18:04:19', '2017-05-29 18:04:19', NULL),
+(50, 'browse_banners', 'banners', '2017-05-29 19:24:56', '2017-05-29 19:24:56', NULL),
+(51, 'read_banners', 'banners', '2017-05-29 19:24:56', '2017-05-29 19:24:56', NULL),
+(52, 'edit_banners', 'banners', '2017-05-29 19:24:56', '2017-05-29 19:24:56', NULL),
+(53, 'add_banners', 'banners', '2017-05-29 19:24:56', '2017-05-29 19:24:56', NULL),
+(54, 'delete_banners', 'banners', '2017-05-29 19:24:56', '2017-05-29 19:24:56', NULL),
+(55, 'browse_category_pages', 'category_pages', '2017-05-31 01:50:19', '2017-05-31 01:50:19', NULL),
+(56, 'read_category_pages', 'category_pages', '2017-05-31 01:50:19', '2017-05-31 01:50:19', NULL),
+(57, 'edit_category_pages', 'category_pages', '2017-05-31 01:50:19', '2017-05-31 01:50:19', NULL),
+(58, 'add_category_pages', 'category_pages', '2017-05-31 01:50:19', '2017-05-31 01:50:19', NULL),
+(59, 'delete_category_pages', 'category_pages', '2017-05-31 01:50:19', '2017-05-31 01:50:19', NULL),
+(60, 'browse_pages', 'pages', '2017-05-31 02:22:26', '2017-05-31 02:22:26', NULL),
+(61, 'read_pages', 'pages', '2017-05-31 02:22:26', '2017-05-31 02:22:26', NULL),
+(62, 'edit_pages', 'pages', '2017-05-31 02:22:26', '2017-05-31 02:22:26', NULL),
+(63, 'add_pages', 'pages', '2017-05-31 02:22:26', '2017-05-31 02:22:26', NULL),
+(64, 'delete_pages', 'pages', '2017-05-31 02:22:26', '2017-05-31 02:22:26', NULL),
+(65, 'browse_news_categories', 'news_categories', '2017-06-02 00:59:46', '2017-06-02 00:59:46', NULL),
+(66, 'read_news_categories', 'news_categories', '2017-06-02 00:59:46', '2017-06-02 00:59:46', NULL),
+(67, 'edit_news_categories', 'news_categories', '2017-06-02 00:59:46', '2017-06-02 00:59:46', NULL),
+(68, 'add_news_categories', 'news_categories', '2017-06-02 00:59:46', '2017-06-02 00:59:46', NULL),
+(69, 'delete_news_categories', 'news_categories', '2017-06-02 00:59:46', '2017-06-02 00:59:46', NULL),
+(70, 'browse_news', 'news', '2017-06-02 02:07:04', '2017-06-02 02:07:04', NULL),
+(71, 'read_news', 'news', '2017-06-02 02:07:04', '2017-06-02 02:07:04', NULL),
+(72, 'edit_news', 'news', '2017-06-02 02:07:04', '2017-06-02 02:07:04', NULL),
+(73, 'add_news', 'news', '2017-06-02 02:07:04', '2017-06-02 02:07:04', NULL),
+(74, 'delete_news', 'news', '2017-06-02 02:07:04', '2017-06-02 02:07:04', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `permission_groups`
+--
+
+CREATE TABLE `permission_groups` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `permission_role`
+--
+
+CREATE TABLE `permission_role` (
+  `permission_id` int(10) UNSIGNED NOT NULL,
+  `role_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `permission_role`
+--
+
+INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
+(1, 1),
+(2, 1),
+(3, 1),
+(4, 1),
+(5, 1),
+(6, 1),
+(7, 1),
+(8, 1),
+(9, 1),
+(15, 1),
+(16, 1),
+(17, 1),
+(18, 1),
+(19, 1),
+(20, 1),
+(21, 1),
+(22, 1),
+(23, 1),
+(24, 1),
+(30, 1),
+(31, 1),
+(32, 1),
+(33, 1),
+(34, 1),
+(40, 1),
+(41, 1),
+(42, 1),
+(43, 1),
+(44, 1),
+(45, 1),
+(46, 1),
+(47, 1),
+(48, 1),
+(49, 1),
+(50, 1),
+(51, 1),
+(52, 1),
+(53, 1),
+(54, 1),
+(55, 1),
+(56, 1),
+(57, 1),
+(58, 1),
+(59, 1),
+(60, 1),
+(61, 1),
+(62, 1),
+(63, 1),
+(64, 1),
+(65, 1),
+(66, 1),
+(67, 1),
+(68, 1),
+(69, 1),
+(70, 1),
+(71, 1),
+(72, 1),
+(73, 1),
+(74, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `display_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `roles`
+--
+
+INSERT INTO `roles` (`id`, `name`, `display_name`, `created_at`, `updated_at`) VALUES
+(1, 'admin', 'Administrator', '2017-05-29 17:34:09', '2017-05-29 17:34:09'),
+(2, 'user', 'Normal User', '2017-05-29 17:34:09', '2017-05-29 17:34:09');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `key` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `display_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `value` text COLLATE utf8_unicode_ci NOT NULL,
+  `details` text COLLATE utf8_unicode_ci,
+  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `order` int(11) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `settings`
+--
+
+INSERT INTO `settings` (`id`, `key`, `display_name`, `value`, `details`, `type`, `order`) VALUES
+(1, 'google_analytics_client_id', 'google_analytics_client_id', '', '', 'text', 0);
 
 -- --------------------------------------------------------
 
@@ -622,7 +649,8 @@ CREATE TABLE `pages` (
 
 CREATE TABLE `statuses` (
   `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -631,10 +659,52 @@ CREATE TABLE `statuses` (
 -- Volcado de datos para la tabla `statuses`
 --
 
-INSERT INTO `statuses` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'activo', '2017-05-20 20:17:12', NULL),
-(2, 'inactivo', '2017-05-20 20:17:44', NULL),
-(3, 'pause', '2017-05-20 20:46:45', NULL);
+INSERT INTO `statuses` (`id`, `status`, `slug`, `created_at`, `updated_at`) VALUES
+(1, 'activo', 'activo', '2017-05-29 17:56:46', '2017-05-29 17:56:46'),
+(2, 'inactivo', 'inactivo', '2017-05-29 17:57:18', '2017-05-29 17:57:18'),
+(3, 'pendiente', 'pendiente', '2017-05-29 17:57:52', '2017-05-29 17:57:52');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `translations`
+--
+
+CREATE TABLE `translations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `table_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `column_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `foreign_key` int(10) UNSIGNED NOT NULL,
+  `locale` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `value` text COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `role_id` int(11) DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `avatar` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `avatar`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Elkin Garzon', 'elkingarzonyaya@gmail.com', 'users/default.png', '$2y$10$VeEqq8FDJ6CzGbgJLjennuN8VTRl9GSQR8R0g0ZmTw2Va.hLdK4ja', 'NtIGeTC5qMCoW5mBLWUrLKoYEzAGkCBQSfqPvRVEGmCYzdcMQ1Q9w4fbOfRZ', '2017-05-29 17:35:01', '2017-05-29 19:44:10');
 
 --
 -- Índices para tablas volcadas
@@ -644,109 +714,52 @@ INSERT INTO `statuses` (`id`, `name`, `created_at`, `updated_at`) VALUES
 -- Indices de la tabla `banners`
 --
 ALTER TABLE `banners`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `banners_banner_category_id_index` (`banner_category`),
+  ADD KEY `banners_status_id_index` (`status`);
 
 --
--- Indices de la tabla `banner_categoris`
+-- Indices de la tabla `banner_categories`
 --
-ALTER TABLE `banner_categoris`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `banner_categories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `banner_categories_status_index` (`status`);
 
 --
--- Indices de la tabla `categories`
+-- Indices de la tabla `category_pages`
 --
-ALTER TABLE `categories`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `category_pages`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `category_pages_status_index` (`status`);
 
 --
--- Indices de la tabla `cms_apicustom`
+-- Indices de la tabla `data_rows`
 --
-ALTER TABLE `cms_apicustom`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `data_rows`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `data_rows_data_type_id_foreign` (`data_type_id`);
 
 --
--- Indices de la tabla `cms_apikey`
+-- Indices de la tabla `data_types`
 --
-ALTER TABLE `cms_apikey`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `data_types`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `data_types_name_unique` (`name`),
+  ADD UNIQUE KEY `data_types_slug_unique` (`slug`);
 
 --
--- Indices de la tabla `cms_dashboard`
+-- Indices de la tabla `menus`
 --
-ALTER TABLE `cms_dashboard`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `menus`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `menus_name_unique` (`name`);
 
 --
--- Indices de la tabla `cms_email_queues`
+-- Indices de la tabla `menu_items`
 --
-ALTER TABLE `cms_email_queues`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `cms_email_templates`
---
-ALTER TABLE `cms_email_templates`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `cms_logs`
---
-ALTER TABLE `cms_logs`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `cms_menus`
---
-ALTER TABLE `cms_menus`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `cms_moduls`
---
-ALTER TABLE `cms_moduls`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `cms_notifications`
---
-ALTER TABLE `cms_notifications`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `cms_privileges`
---
-ALTER TABLE `cms_privileges`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `cms_privileges_roles`
---
-ALTER TABLE `cms_privileges_roles`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `cms_settings`
---
-ALTER TABLE `cms_settings`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `cms_statistics`
---
-ALTER TABLE `cms_statistics`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `cms_statistic_components`
---
-ALTER TABLE `cms_statistic_components`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `cms_users`
---
-ALTER TABLE `cms_users`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `menu_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `menu_items_menu_id_foreign` (`menu_id`);
 
 --
 -- Indices de la tabla `migrations`
@@ -755,16 +768,93 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `news`
+--
+ALTER TABLE `news`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `news_slug_unique` (`slug`),
+  ADD UNIQUE KEY `news_cover_unique` (`cover`),
+  ADD KEY `news_status_index` (`status`),
+  ADD KEY `news_category_index` (`category`);
+
+--
+-- Indices de la tabla `news_categories`
+--
+ALTER TABLE `news_categories`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `news_categories_slug_unique` (`slug`),
+  ADD KEY `news_categories_status_index` (`status`);
+
+--
 -- Indices de la tabla `pages`
 --
 ALTER TABLE `pages`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `pages_page_category_index` (`category_page`),
+  ADD KEY `pages_status_index` (`status`);
+
+--
+-- Indices de la tabla `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD KEY `password_resets_email_index` (`email`),
+  ADD KEY `password_resets_token_index` (`token`);
+
+--
+-- Indices de la tabla `permissions`
+--
+ALTER TABLE `permissions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `permissions_key_index` (`key`);
+
+--
+-- Indices de la tabla `permission_groups`
+--
+ALTER TABLE `permission_groups`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `permission_groups_name_unique` (`name`);
+
+--
+-- Indices de la tabla `permission_role`
+--
+ALTER TABLE `permission_role`
+  ADD PRIMARY KEY (`permission_id`,`role_id`),
+  ADD KEY `permission_role_permission_id_index` (`permission_id`),
+  ADD KEY `permission_role_role_id_index` (`role_id`);
+
+--
+-- Indices de la tabla `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `roles_name_unique` (`name`);
+
+--
+-- Indices de la tabla `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `settings_key_unique` (`key`);
 
 --
 -- Indices de la tabla `statuses`
 --
 ALTER TABLE `statuses`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `translations`
+--
+ALTER TABLE `translations`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `translations_table_name_column_name_foreign_key_locale_unique` (`table_name`,`column_name`,`foreign_key`,`locale`);
+
+--
+-- Indices de la tabla `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -776,105 +866,113 @@ ALTER TABLE `statuses`
 ALTER TABLE `banners`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT de la tabla `banner_categoris`
+-- AUTO_INCREMENT de la tabla `banner_categories`
 --
-ALTER TABLE `banner_categoris`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT de la tabla `categories`
---
-ALTER TABLE `categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT de la tabla `cms_apicustom`
---
-ALTER TABLE `cms_apicustom`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT de la tabla `cms_apikey`
---
-ALTER TABLE `cms_apikey`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT de la tabla `cms_dashboard`
---
-ALTER TABLE `cms_dashboard`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT de la tabla `cms_email_queues`
---
-ALTER TABLE `cms_email_queues`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT de la tabla `cms_email_templates`
---
-ALTER TABLE `cms_email_templates`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT de la tabla `cms_logs`
---
-ALTER TABLE `cms_logs`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
---
--- AUTO_INCREMENT de la tabla `cms_menus`
---
-ALTER TABLE `cms_menus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
---
--- AUTO_INCREMENT de la tabla `cms_moduls`
---
-ALTER TABLE `cms_moduls`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
---
--- AUTO_INCREMENT de la tabla `cms_notifications`
---
-ALTER TABLE `cms_notifications`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT de la tabla `cms_privileges`
---
-ALTER TABLE `cms_privileges`
+ALTER TABLE `banner_categories`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT de la tabla `cms_privileges_roles`
+-- AUTO_INCREMENT de la tabla `category_pages`
 --
-ALTER TABLE `cms_privileges_roles`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+ALTER TABLE `category_pages`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT de la tabla `cms_settings`
+-- AUTO_INCREMENT de la tabla `data_rows`
 --
-ALTER TABLE `cms_settings`
+ALTER TABLE `data_rows`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
+--
+-- AUTO_INCREMENT de la tabla `data_types`
+--
+ALTER TABLE `data_types`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
--- AUTO_INCREMENT de la tabla `cms_statistics`
+-- AUTO_INCREMENT de la tabla `menus`
 --
-ALTER TABLE `cms_statistics`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `menus`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT de la tabla `cms_statistic_components`
+-- AUTO_INCREMENT de la tabla `menu_items`
 --
-ALTER TABLE `cms_statistic_components`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT de la tabla `cms_users`
---
-ALTER TABLE `cms_users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `menu_items`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+--
+-- AUTO_INCREMENT de la tabla `news`
+--
+ALTER TABLE `news`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT de la tabla `news_categories`
+--
+ALTER TABLE `news_categories`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `pages`
 --
 ALTER TABLE `pages`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT de la tabla `permissions`
+--
+ALTER TABLE `permissions`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+--
+-- AUTO_INCREMENT de la tabla `permission_groups`
+--
+ALTER TABLE `permission_groups`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT de la tabla `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `statuses`
 --
 ALTER TABLE `statuses`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT de la tabla `translations`
+--
+ALTER TABLE `translations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `data_rows`
+--
+ALTER TABLE `data_rows`
+  ADD CONSTRAINT `data_rows_data_type_id_foreign` FOREIGN KEY (`data_type_id`) REFERENCES `data_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `menu_items`
+--
+ALTER TABLE `menu_items`
+  ADD CONSTRAINT `menu_items_menu_id_foreign` FOREIGN KEY (`menu_id`) REFERENCES `menus` (`id`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `permission_role`
+--
+ALTER TABLE `permission_role`
+  ADD CONSTRAINT `permission_role_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `permission_role_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
