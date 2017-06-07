@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-06-2017 a las 05:11:24
+-- Tiempo de generación: 08-06-2017 a las 00:01:11
 -- Versión del servidor: 10.1.19-MariaDB
 -- Versión de PHP: 5.6.28
 
@@ -19,6 +19,28 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `page`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `albums`
+--
+
+CREATE TABLE `albums` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `category` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `albums`
+--
+
+INSERT INTO `albums` (`id`, `name`, `category`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'cafam', 1, 1, '2017-06-03 15:51:44', '2017-06-03 15:51:44');
 
 -- --------------------------------------------------------
 
@@ -79,15 +101,18 @@ CREATE TABLE `category_pages` (
   `status` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `slug` text COLLATE utf8_unicode_ci
+  `slug` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `category_pages`
 --
 
-INSERT INTO `category_pages` (`id`, `name`, `status`, `created_at`, `updated_at`, `slug`) VALUES
-(1, 'home', 1, '2017-05-31 02:04:10', '2017-05-31 02:04:10', 'inicio');
+INSERT INTO `category_pages` (`id`, `name`, `status`, `created_at`, `updated_at`, `slug`, `url`) VALUES
+(1, 'home', 1, '2017-05-31 02:04:10', '2017-06-05 18:35:15', 'inicio', '/'),
+(2, 'services', 1, '2017-06-05 20:38:26', '2017-06-05 20:38:26', 'servicios', '/servicios'),
+(3, 'team', 1, '2017-06-06 20:54:44', '2017-06-06 20:54:44', 'nuestro equipo', '/nuestro-equipo');
 
 -- --------------------------------------------------------
 
@@ -161,9 +186,9 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (77, 10, 'status', 'select_dropdown', 'Status', 1, 0, 0, 0, 0, 0, '{"relationship":{"key":"id","label":"status","status_slug":"admin/status"}}', 5),
 (78, 11, 'id', 'text', 'Id', 1, 1, 1, 0, 0, 0, '', 1),
 (79, 11, 'name', 'text', 'Name', 0, 1, 1, 1, 1, 1, '', 2),
-(80, 11, 'status', 'select_dropdown', 'Status', 0, 0, 1, 1, 1, 1, '{"relationship":{"key":"id","label":"status","status_slug":"admin/status"}}', 4),
-(81, 11, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 0, 0, 0, '', 5),
-(82, 11, 'updated_at', 'timestamp', 'Updated At', 0, 1, 1, 0, 0, 0, '', 6),
+(80, 11, 'status', 'select_dropdown', 'Status', 0, 0, 0, 1, 1, 1, '{"relationship":{"key":"id","label":"status","status_slug":"admin/status"}}', 4),
+(81, 11, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 0, 0, 0, '', 6),
+(82, 11, 'updated_at', 'timestamp', 'Updated At', 0, 1, 1, 0, 0, 0, '', 7),
 (83, 11, 'slug', 'text', 'Slug', 0, 1, 1, 1, 1, 1, '', 3),
 (84, 12, 'id', 'text', 'Id', 1, 1, 1, 0, 0, 0, '', 1),
 (85, 12, 'title', 'text', 'Title', 0, 1, 1, 1, 1, 1, '', 2),
@@ -194,7 +219,38 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (113, 16, 'category', 'select_dropdown', 'Category', 0, 0, 0, 1, 1, 1, '{"relationship":{"key":"id","label":"name"}}', 10),
 (114, 16, 'status', 'select_dropdown', 'Status', 0, 0, 0, 1, 1, 1, '{"relationship":{"key":"id","label":"status","status_slug":"admin/status"}}', 11),
 (115, 16, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 1, 0, 0, '', 12),
-(116, 16, 'updated_at', 'timestamp', 'Updated At', 0, 1, 1, 0, 0, 0, '', 13);
+(116, 16, 'updated_at', 'timestamp', 'Updated At', 0, 1, 1, 0, 0, 0, '', 13),
+(117, 17, 'id', 'number', 'Id', 1, 1, 1, 0, 0, 0, '', 1),
+(118, 17, 'name', 'text', 'Name', 0, 1, 1, 1, 1, 1, '', 2),
+(119, 17, 'status', 'select_dropdown', 'Status', 0, 0, 1, 1, 1, 1, '{"relationship":{"key":"id","label":"status","status_slug":"admin/status"}}', 3),
+(120, 17, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 1, 0, 0, '', 4),
+(121, 17, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '', 5),
+(128, 21, 'id', 'number', 'Id', 1, 1, 1, 0, 0, 0, '', 1),
+(129, 21, 'name', 'text', 'Name', 0, 1, 1, 1, 1, 1, '', 2),
+(130, 21, 'category', 'select_dropdown', 'Category', 0, 0, 1, 1, 1, 1, '{"relationship":{"key":"id","label":"name"}}', 3),
+(131, 21, 'status', 'select_dropdown', 'Status', 0, 0, 1, 1, 1, 1, '{"relationship":{"key":"id","label":"status","status_slug":"admin/status"}}', 4),
+(132, 21, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 0, 0, 0, '', 5),
+(133, 21, 'updated_at', 'timestamp', 'Updated At', 0, 1, 1, 0, 0, 0, '', 6),
+(134, 23, 'id', 'number', 'Id', 1, 1, 1, 0, 0, 0, '', 1),
+(135, 23, 'name', 'text', 'Name', 0, 1, 1, 1, 1, 1, '', 2),
+(136, 23, 'image', 'image', 'Image', 0, 1, 1, 1, 1, 1, '', 3),
+(137, 23, 'description', 'rich_text_box', 'Description', 0, 1, 1, 1, 1, 1, '', 4),
+(138, 23, 'url', 'text', 'Url', 0, 1, 1, 1, 1, 1, '', 5),
+(139, 23, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 0, 0, 0, '', 8),
+(140, 23, 'updated_at', 'timestamp', 'Updated At', 0, 1, 1, 0, 0, 0, '', 9),
+(141, 23, 'album', 'select_dropdown', 'Album', 0, 0, 1, 1, 1, 1, '', 6),
+(142, 23, 'status', 'select_dropdown', 'Status', 0, 0, 1, 1, 1, 1, '', 7),
+(152, 25, 'id', 'number', 'Id', 1, 1, 1, 0, 0, 0, '', 1),
+(153, 25, 'name', 'text', 'Name', 0, 1, 1, 1, 1, 1, '', 2),
+(154, 25, 'image', 'text', 'Image', 0, 0, 0, 1, 1, 1, '', 3),
+(155, 25, 'description', 'rich_text_box', 'Description', 0, 1, 1, 1, 1, 1, '', 4),
+(156, 25, 'category', 'select_dropdown', 'Category', 0, 0, 0, 1, 1, 1, '{"relationship":{"key":"id","label":"name"}}', 6),
+(157, 25, 'album', 'select_dropdown', 'Album', 0, 0, 0, 1, 1, 1, '{"relationship":{"key":"id","label":"name"}}', 7),
+(158, 25, 'status', 'select_dropdown', 'Status', 0, 0, 0, 1, 1, 1, '{"relationship":{"key":"id","label":"status","status_slug":"admin/status"}}', 8),
+(159, 25, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 0, 0, 0, '', 9),
+(160, 25, 'updated_at', 'timestamp', 'Updated At', 0, 1, 1, 0, 0, 0, '', 10),
+(161, 25, 'url', 'text', 'Url', 0, 1, 1, 1, 1, 1, '', 5),
+(162, 11, 'url', 'text', 'Url', 0, 1, 1, 1, 1, 1, '', 5);
 
 -- --------------------------------------------------------
 
@@ -233,7 +289,52 @@ INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `displa
 (11, 'category_pages', 'category-pages', 'Category Page', 'Category Pages', 'voyager-folder', 'App\\CategoryPage', '', '', 1, 0, '2017-05-31 01:50:19', '2017-05-31 01:50:19'),
 (12, 'pages', 'pages', 'Page', 'Pages', 'voyager-book', 'App\\Page', '', '', 1, 0, '2017-05-31 02:22:25', '2017-05-31 02:22:25'),
 (13, 'news_categories', 'news-category', 'News Category', 'News Categories', 'voyager-folder', 'App\\NewsCategory', '', '', 1, 0, '2017-06-02 00:59:46', '2017-06-02 01:03:04'),
-(16, 'news', 'news', 'News', 'News', 'voyager-file-text', 'App\\News', '', '', 1, 0, '2017-06-02 02:07:02', '2017-06-02 02:07:02');
+(16, 'news', 'news', 'News', 'News', 'voyager-file-text', 'App\\News', '', '', 1, 0, '2017-06-02 02:07:02', '2017-06-02 02:07:02'),
+(17, 'galery_categories', 'galery-category', 'Galery Category', 'Galery Categories', 'voyager-images', 'App\\GaleryCategory', '', '', 1, 0, '2017-06-02 22:56:01', '2017-06-02 22:56:01'),
+(21, 'albums', 'album', 'Album', 'Albums', 'voyager-tag', 'App\\Album', '', '', 1, 0, '2017-06-03 15:37:27', '2017-06-03 15:37:27'),
+(23, 'photo', 'photo', 'Photo', 'Photos', 'voyager-images', 'App\\Photo', '', '', 1, 0, '2017-06-03 16:54:48', '2017-06-03 16:54:48'),
+(25, 'galery_photos', 'galery-photo', 'Galery Photo', 'Galery Photos', 'voyager-images', 'App\\GaleryPhoto', '', '', 1, 0, '2017-06-03 17:22:28', '2017-06-03 17:23:14');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `galery_categories`
+--
+
+CREATE TABLE `galery_categories` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `galery_categories`
+--
+
+INSERT INTO `galery_categories` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'salud', 1, '2017-06-02 23:03:15', '2017-06-02 23:03:15'),
+(2, 'mercadeo', 1, '2017-06-02 23:03:59', '2017-06-02 23:03:59');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `galery_photos`
+--
+
+CREATE TABLE `galery_photos` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `category` int(11) DEFAULT NULL,
+  `album` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -283,15 +384,15 @@ CREATE TABLE `menu_items` (
 
 INSERT INTO `menu_items` (`id`, `menu_id`, `title`, `url`, `target`, `icon_class`, `color`, `parent_id`, `order`, `created_at`, `updated_at`, `route`, `parameters`) VALUES
 (1, 1, 'Dashboard', '/admin', '_self', 'voyager-boat', NULL, NULL, 1, '2017-05-29 17:34:08', '2017-05-29 17:34:08', NULL, NULL),
-(2, 1, 'Media', '/admin/media', '_self', 'voyager-images', NULL, NULL, 9, '2017-05-29 17:34:08', '2017-06-02 01:13:07', NULL, NULL),
-(4, 1, 'Users', '/admin/users', '_self', 'voyager-person', NULL, NULL, 8, '2017-05-29 17:34:08', '2017-06-02 01:13:07', NULL, NULL),
+(2, 1, 'Media', '/admin/media', '_self', 'voyager-images', NULL, NULL, 9, '2017-05-29 17:34:08', '2017-06-02 23:02:11', NULL, NULL),
+(4, 1, 'Users', '/admin/users', '_self', 'voyager-person', NULL, NULL, 8, '2017-05-29 17:34:08', '2017-06-02 23:02:11', NULL, NULL),
 (5, 1, 'News', '/admin/categories', '_self', 'voyager-categories', '#000000', NULL, 6, '2017-05-29 17:34:08', '2017-06-02 01:13:07', NULL, ''),
 (6, 1, 'Pages', '/admin/pages', '_self', 'voyager-file-text', NULL, 16, 2, '2017-05-29 17:34:08', '2017-05-31 02:07:39', NULL, NULL),
 (7, 1, 'Roles', '/admin/roles', '_self', 'voyager-lock', NULL, NULL, 3, '2017-05-29 17:34:08', '2017-05-29 17:40:40', NULL, NULL),
-(8, 1, 'Tools', '', '_self', 'voyager-tools', NULL, NULL, 10, '2017-05-29 17:34:08', '2017-05-31 02:07:37', NULL, NULL),
+(8, 1, 'Tools', '', '_self', 'voyager-tools', NULL, NULL, 10, '2017-05-29 17:34:08', '2017-06-02 23:02:11', NULL, NULL),
 (9, 1, 'Menu Builder', '/admin/menus', '_self', 'voyager-list', NULL, 8, 1, '2017-05-29 17:34:08', '2017-05-29 17:40:32', NULL, NULL),
 (10, 1, 'Database', '/admin/database', '_self', 'voyager-data', NULL, 8, 2, '2017-05-29 17:34:08', '2017-05-29 17:40:32', NULL, NULL),
-(11, 1, 'Settings', '/admin/settings', '_self', 'voyager-settings', NULL, NULL, 11, '2017-05-29 17:34:09', '2017-05-31 02:07:37', NULL, NULL),
+(11, 1, 'Settings', '/admin/settings', '_self', 'voyager-settings', NULL, NULL, 11, '2017-05-29 17:34:09', '2017-06-02 23:02:12', NULL, NULL),
 (12, 1, 'status', '/admin/status', '_self', 'voyager-check-circle', '#000000', NULL, 2, '2017-05-29 17:40:18', '2017-05-29 17:40:40', NULL, ''),
 (13, 1, 'banner category', '/admin/banner-category', '_self', 'voyager-camera', '#000000', 14, 1, '2017-05-29 18:06:28', '2017-06-02 03:02:21', NULL, ''),
 (14, 1, 'banner', '/admin/banner', '_self', 'voyager-categories', '#000000', NULL, 4, '2017-05-29 18:07:41', '2017-06-02 03:01:18', NULL, ''),
@@ -299,7 +400,11 @@ INSERT INTO `menu_items` (`id`, `menu_id`, `title`, `url`, `target`, `icon_class
 (16, 1, 'pages', '/admin/pages', '_self', 'voyager-categories', '#000000', NULL, 5, '2017-05-31 01:44:41', '2017-06-02 02:37:15', NULL, ''),
 (17, 1, 'category pages', '/admin/category-pages', '_self', 'voyager-folder', '#000000', 16, 1, '2017-05-31 01:54:22', '2017-05-31 02:07:39', NULL, ''),
 (18, 1, 'News category', '/admin/news-category', '_self', 'voyager-news', '#000000', 5, 1, '2017-06-02 01:05:35', '2017-06-02 02:34:33', NULL, ''),
-(19, 1, 'News', '/admin/news', '_self', 'voyager-file-text', '#000000', 5, 2, '2017-06-02 02:13:16', '2017-06-02 02:13:28', NULL, '');
+(19, 1, 'News', '/admin/news', '_self', 'voyager-file-text', '#000000', 5, 2, '2017-06-02 02:13:16', '2017-06-02 02:13:28', NULL, ''),
+(20, 1, 'galery category', '/admin/galery-category', '_self', 'voyager-images', '#000000', 21, 1, '2017-06-02 22:58:49', '2017-06-02 23:02:02', NULL, ''),
+(21, 1, 'galery', '', '_self', 'voyager-categories', '#000000', NULL, 7, '2017-06-02 22:59:20', '2017-06-02 23:02:11', NULL, ''),
+(22, 1, 'album', '/admin/album', '_self', 'voyager-tag', '#000000', 21, 2, '2017-06-02 23:20:40', '2017-06-02 23:20:57', NULL, ''),
+(23, 1, 'photo', '/admin/galery-photo', '_self', 'voyager-images', '#000000', 21, 3, '2017-06-03 17:07:03', '2017-06-03 17:23:51', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -507,7 +612,32 @@ INSERT INTO `permissions` (`id`, `key`, `table_name`, `created_at`, `updated_at`
 (71, 'read_news', 'news', '2017-06-02 02:07:04', '2017-06-02 02:07:04', NULL),
 (72, 'edit_news', 'news', '2017-06-02 02:07:04', '2017-06-02 02:07:04', NULL),
 (73, 'add_news', 'news', '2017-06-02 02:07:04', '2017-06-02 02:07:04', NULL),
-(74, 'delete_news', 'news', '2017-06-02 02:07:04', '2017-06-02 02:07:04', NULL);
+(74, 'delete_news', 'news', '2017-06-02 02:07:04', '2017-06-02 02:07:04', NULL),
+(75, 'browse_galery_categories', 'galery_categories', '2017-06-02 22:56:01', '2017-06-02 22:56:01', NULL),
+(76, 'read_galery_categories', 'galery_categories', '2017-06-02 22:56:01', '2017-06-02 22:56:01', NULL),
+(77, 'edit_galery_categories', 'galery_categories', '2017-06-02 22:56:01', '2017-06-02 22:56:01', NULL),
+(78, 'add_galery_categories', 'galery_categories', '2017-06-02 22:56:01', '2017-06-02 22:56:01', NULL),
+(79, 'delete_galery_categories', 'galery_categories', '2017-06-02 22:56:01', '2017-06-02 22:56:01', NULL),
+(80, 'browse_album', 'album', '2017-06-02 23:11:00', '2017-06-02 23:11:00', NULL),
+(81, 'read_album', 'album', '2017-06-02 23:11:00', '2017-06-02 23:11:00', NULL),
+(82, 'edit_album', 'album', '2017-06-02 23:11:00', '2017-06-02 23:11:00', NULL),
+(83, 'add_album', 'album', '2017-06-02 23:11:00', '2017-06-02 23:11:00', NULL),
+(84, 'delete_album', 'album', '2017-06-02 23:11:00', '2017-06-02 23:11:00', NULL),
+(85, 'browse_albums', 'albums', '2017-06-03 15:37:28', '2017-06-03 15:37:28', NULL),
+(86, 'read_albums', 'albums', '2017-06-03 15:37:28', '2017-06-03 15:37:28', NULL),
+(87, 'edit_albums', 'albums', '2017-06-03 15:37:28', '2017-06-03 15:37:28', NULL),
+(88, 'add_albums', 'albums', '2017-06-03 15:37:28', '2017-06-03 15:37:28', NULL),
+(89, 'delete_albums', 'albums', '2017-06-03 15:37:28', '2017-06-03 15:37:28', NULL),
+(90, 'browse_photo', 'photo', '2017-06-03 16:54:49', '2017-06-03 16:54:49', NULL),
+(91, 'read_photo', 'photo', '2017-06-03 16:54:49', '2017-06-03 16:54:49', NULL),
+(92, 'edit_photo', 'photo', '2017-06-03 16:54:49', '2017-06-03 16:54:49', NULL),
+(93, 'add_photo', 'photo', '2017-06-03 16:54:49', '2017-06-03 16:54:49', NULL),
+(94, 'delete_photo', 'photo', '2017-06-03 16:54:49', '2017-06-03 16:54:49', NULL),
+(100, 'browse_galery_photos', 'galery_photos', '2017-06-03 17:22:28', '2017-06-03 17:22:28', NULL),
+(101, 'read_galery_photos', 'galery_photos', '2017-06-03 17:22:28', '2017-06-03 17:22:28', NULL),
+(102, 'edit_galery_photos', 'galery_photos', '2017-06-03 17:22:28', '2017-06-03 17:22:28', NULL),
+(103, 'add_galery_photos', 'galery_photos', '2017-06-03 17:22:28', '2017-06-03 17:22:28', NULL),
+(104, 'delete_galery_photos', 'galery_photos', '2017-06-03 17:22:28', '2017-06-03 17:22:28', NULL);
 
 -- --------------------------------------------------------
 
@@ -594,7 +724,32 @@ INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
 (71, 1),
 (72, 1),
 (73, 1),
-(74, 1);
+(74, 1),
+(75, 1),
+(76, 1),
+(77, 1),
+(78, 1),
+(79, 1),
+(80, 1),
+(81, 1),
+(82, 1),
+(83, 1),
+(84, 1),
+(85, 1),
+(86, 1),
+(87, 1),
+(88, 1),
+(89, 1),
+(90, 1),
+(91, 1),
+(92, 1),
+(93, 1),
+(94, 1),
+(100, 1),
+(101, 1),
+(102, 1),
+(103, 1),
+(104, 1);
 
 -- --------------------------------------------------------
 
@@ -639,7 +794,13 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `key`, `display_name`, `value`, `details`, `type`, `order`) VALUES
-(1, 'google_analytics_client_id', 'google_analytics_client_id', '', '', 'text', 0);
+(1, 'google_analytics_client_id', 'google_analytics_client_id', '', '', 'text', 0),
+(2, 'admin_title', 'admin_title', 'Duna-web', '', 'text', 1),
+(3, 'admin_description', 'admin_description', 'Admin', '', 'text', 2),
+(4, 'admin_loader', 'admin_loader', '', '', 'image', 3),
+(5, 'admin_bg_image', 'admin_bg_image', '', '', 'image', 4),
+(6, 'admin_bg_color', 'admin_bg_color', '', '', 'text', 5),
+(7, 'title_site', 'title_site', 'Duna web', '', 'text', 6);
 
 -- --------------------------------------------------------
 
@@ -704,11 +865,19 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `avatar`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Elkin Garzon', 'elkingarzonyaya@gmail.com', 'users/default.png', '$2y$10$VeEqq8FDJ6CzGbgJLjennuN8VTRl9GSQR8R0g0ZmTw2Va.hLdK4ja', 'NtIGeTC5qMCoW5mBLWUrLKoYEzAGkCBQSfqPvRVEGmCYzdcMQ1Q9w4fbOfRZ', '2017-05-29 17:35:01', '2017-05-29 19:44:10');
+(1, 1, 'Elkin Garzon', 'elkingarzonyaya@gmail.com', 'users/default.png', '$2y$10$VeEqq8FDJ6CzGbgJLjennuN8VTRl9GSQR8R0g0ZmTw2Va.hLdK4ja', 'nqFoaUFRrqh20ATU4luoI4pfEuOBcxikNZk3W6qp8eBH5GxJZFihZqbcxCyO', '2017-05-29 17:35:01', '2017-06-03 16:33:38');
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `albums`
+--
+ALTER TABLE `albums`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `albums_status_index` (`status`),
+  ADD KEY `albums_category_index` (`category`);
 
 --
 -- Indices de la tabla `banners`
@@ -746,6 +915,20 @@ ALTER TABLE `data_types`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `data_types_name_unique` (`name`),
   ADD UNIQUE KEY `data_types_slug_unique` (`slug`);
+
+--
+-- Indices de la tabla `galery_categories`
+--
+ALTER TABLE `galery_categories`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `galery_categories_name_unique` (`name`),
+  ADD KEY `galery_categories_status_index` (`status`);
+
+--
+-- Indices de la tabla `galery_photos`
+--
+ALTER TABLE `galery_photos`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `menus`
@@ -861,6 +1044,11 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `albums`
+--
+ALTER TABLE `albums`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT de la tabla `banners`
 --
 ALTER TABLE `banners`
@@ -874,17 +1062,27 @@ ALTER TABLE `banner_categories`
 -- AUTO_INCREMENT de la tabla `category_pages`
 --
 ALTER TABLE `category_pages`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `data_rows`
 --
 ALTER TABLE `data_rows`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
 --
 -- AUTO_INCREMENT de la tabla `data_types`
 --
 ALTER TABLE `data_types`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+--
+-- AUTO_INCREMENT de la tabla `galery_categories`
+--
+ALTER TABLE `galery_categories`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT de la tabla `galery_photos`
+--
+ALTER TABLE `galery_photos`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `menus`
 --
@@ -894,7 +1092,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT de la tabla `menu_items`
 --
 ALTER TABLE `menu_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT de la tabla `migrations`
 --
@@ -919,7 +1117,7 @@ ALTER TABLE `pages`
 -- AUTO_INCREMENT de la tabla `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 --
 -- AUTO_INCREMENT de la tabla `permission_groups`
 --
@@ -934,7 +1132,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT de la tabla `statuses`
 --
